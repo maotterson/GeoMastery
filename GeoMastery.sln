@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32505.426
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMastery.Domain", "GeoMastery.Domain\GeoMastery.Domain.csproj", "{445EAC86-D893-4EEF-B8F5-12F5FCF5A36E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMastery.BlazorWASM", "GeoMastery.BlazorWASM\GeoMastery.BlazorWASM.csproj", "{F45F8B33-7CC1-4024-9836-9D65C833552D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{445EAC86-D893-4EEF-B8F5-12F5FCF5A36E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{445EAC86-D893-4EEF-B8F5-12F5FCF5A36E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{445EAC86-D893-4EEF-B8F5-12F5FCF5A36E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{445EAC86-D893-4EEF-B8F5-12F5FCF5A36E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F45F8B33-7CC1-4024-9836-9D65C833552D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F45F8B33-7CC1-4024-9836-9D65C833552D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F45F8B33-7CC1-4024-9836-9D65C833552D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F45F8B33-7CC1-4024-9836-9D65C833552D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1358B230-EEC1-49BD-86E2-E1821D6287E3}
+	EndGlobalSection
+EndGlobal
