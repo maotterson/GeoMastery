@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 # Ignored files
 ignored/*
+sample-data/*
+/GeoMastery.BlazorWASM/wwwroot/sample-data
