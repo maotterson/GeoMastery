@@ -6,11 +6,15 @@
 
 <PageTitle>Flags of the World</PageTitle>
 
-<h3>Capitals</h3>
+<h3>Flags of the World</h3>
+<div class="row">
 @foreach(CountryFlagCardViewModel countryCardVM in countryCardVMs)
 {
-    <CountryFlagCard CardViewModel=""="countryCardVM"/>
+    <div class="col-md-4" style="margin-bottom: 1rem;">
+        <CountryFlagCard CardViewModel="countryCardVM"/>
+    </div>
 }
+</div>
 
 @code {
     private List<CountryFlagCardViewModel> countryCardVMs = new List<CountryFlagCardViewModel>();
