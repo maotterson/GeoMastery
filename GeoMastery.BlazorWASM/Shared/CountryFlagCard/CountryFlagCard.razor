@@ -3,11 +3,13 @@
 <div class="card">
     <div class="card-body">
         <h3 class="card-title">@CardViewModel.Country</h3>
-        <img src="@($"data:image/png;base64,{CardViewModel.FlagBase64}")" alt="@CardViewModel.Country flag" />
+        <img class="card-img-top" src="@($"{CardViewModel.FlagBase64}")" alt="@CardViewModel.Country flag" />
     </div>
 </div>
 
 @code {
     [Parameter]
     public CountryFlagCardViewModel CardViewModel { get; set; }
+
+
 }
