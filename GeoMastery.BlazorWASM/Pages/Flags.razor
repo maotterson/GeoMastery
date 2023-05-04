@@ -1,0 +1,27 @@
+﻿@page "/flags"
+
+@using GeoMastery.BlazorWASM.Shared.CountryFlagCard
+
+@inject HttpClient Http
+
+<PageTitle>Flags of the World</PageTitle>
+
+<h3>Flags of the World</h3>
+<div class="row">
+@foreach(CountryFlagCardViewModel countryCardVM in countryCardVMs)
+{
+    <div class="col-md-4" style="margin-bottom: 1rem;">
+        <CountryFlagCard CardViewModel="countryCardVM"/>
+    </div>
+}
+</div>
+
+@code {
+    private List<CountryFlagCardViewModel> countryCardVMs = new List<CountryFlagCardViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var countryCardVMArray = await Http.GetFromJsonAsync<CountryFlagCardViewModel[]>("sample-data/flags.json");
+        countryCardVMs = countryCardVMArray.ToList<CountryFlagCardViewModel>();
+    }
+}
