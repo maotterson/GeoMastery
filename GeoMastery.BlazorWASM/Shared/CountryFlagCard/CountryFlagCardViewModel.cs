@@ -1,4 +1,4 @@
-﻿namespace GeoMastery.BlazorWASM.CountryFlags;
+﻿namespace GeoMastery.BlazorWASM.Shared.CountryFlagCard;
 
 public class CountryFlagCardViewModel
 {
