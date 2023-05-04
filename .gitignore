@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignored files
+ignored/*
+sample-data/*
+/GeoMastery.BlazorWASM/wwwroot/sample-data
