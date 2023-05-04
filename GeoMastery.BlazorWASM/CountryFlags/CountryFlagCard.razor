@@ -1,0 +1,11 @@
+﻿@using System.Text.RegularExpressions;
+
+<div class="country">
+    <h3>@CardViewModel.Country</h3>
+    <img src="@($"data:image/png;base64,{CardViewModel.FlagBase64}")" alt="@CardViewModel.Country flag" />
+</div>
+
+@code {
+    [Parameter]
+    public CountryFlagCardViewModel CardViewModel { get; set; }
+}
