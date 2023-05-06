@@ -59,6 +59,54 @@ public static class SeedData
             }
         }
     }
+    private static void SeedCountryContinents(CountryDbContext context)
+    {
+        var countries = LoadJsonData<List<CountryContinentSeedDto>>("continents.json");
+        foreach (var country in countries)
+        {
+            var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            if (existingCountry != null)
+            {
+                // todo
+            }
+        }
+    }
+    private static void SeedCountryFlags(CountryDbContext context)
+    {
+        var countries = LoadJsonData<List<CountryFlagSeedDto>>("flags.json");
+        foreach (var country in countries)
+        {
+            var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            if (existingCountry != null)
+            {
+                // todo
+            }
+        }
+    }
+    private static void SeedCountryPopulations(CountryDbContext context)
+    {
+        var countries = LoadJsonData<List<CountryPopulationSeedDto>>("populations.json");
+        foreach (var country in countries)
+        {
+            var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            if (existingCountry != null)
+            {
+                // todo
+            }
+        }
+    }
+    private static void SeedCountryRegions(CountryDbContext context)
+    {
+        var countries = LoadJsonData<List<CountryRegionSeedDto>>("regions.json");
+        foreach (var country in countries)
+        {
+            var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            if (existingCountry != null)
+            {
+                // todo
+            }
+        }
+    }
 
     private static T LoadJsonData<T>(string fileName)
     {
