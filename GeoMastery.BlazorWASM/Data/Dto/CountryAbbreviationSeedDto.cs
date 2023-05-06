@@ -1,6 +1,6 @@
-﻿namespace GeoMastery.BlazorWASM.Dto;
+﻿namespace GeoMastery.BlazorWASM.Data.Dto;
 
-public class CountryAbbreviationJsonDto
+public class CountryAbbreviationSeedDto
 {
     public string Abbreviation { get; set; }
     public string Country { get; set; }

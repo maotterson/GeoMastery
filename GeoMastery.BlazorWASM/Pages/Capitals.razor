@@ -7,17 +7,17 @@
 <PageTitle>Capitals of the World</PageTitle>
 
 <h3>Capitals</h3>
-@foreach(CountryCapitalJsonDto capital in capitals)
+@foreach(CountryCapitalSeedDto capital in capitals)
 {
     <p>@capital.Country - @capital.Capital</p>
 }
 
 @code {
-    private List<CountryCapitalJsonDto> capitals = new List<CountryCapitalJsonDto>();
+    private List<CountryCapitalSeedDto> capitals = new List<CountryCapitalSeedDto>();
 
     protected override async Task OnInitializedAsync()
     {
-        var capitalArray = await Http.GetFromJsonAsync<CountryCapitalJsonDto[]>("sample-data/capitals.json");
-        capitals = capitalArray.ToList<CountryCapitalJsonDto>();
+        var capitalArray = await Http.GetFromJsonAsync<CountryCapitalSeedDto[]>("sample-data/capitals.json");
+        capitals = capitalArray.ToList<CountryCapitalSeedDto>();
     }
 }

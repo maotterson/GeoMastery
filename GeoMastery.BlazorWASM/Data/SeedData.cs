@@ -1,4 +1,4 @@
-﻿using GeoMastery.BlazorWASM.Dto;
+﻿using GeoMastery.BlazorWASM.Data.Dto;
 using GeoMastery.Domain.Models;
 using System.Text.Json;
 
@@ -21,7 +21,7 @@ public static class SeedData
 
     private static void SeedCountryAbbreviation(CountryDbContext context)
     {
-        var countries = LoadJsonData<List<CountryAbbreviationJsonDto>>("abbreviations.json");
+        var countries = LoadJsonData<List<CountryAbbreviationSeedDto>>("abbreviations.json");
         foreach (var country in countries)
         {
             context.Countries.Add(new Country { Id = Guid.NewGuid(), Name = country.Country, Code = country.Abbreviation });
@@ -30,7 +30,7 @@ public static class SeedData
 
     private static void SeedCountryCities(CountryDbContext context)
     {
-        var countries = LoadJsonData<List<CountryCitiesJsonDto>>("cities.json");
+        var countries = LoadJsonData<List<CountryCitiesSeedDto>>("cities.json");
         foreach (var country in countries)
         {
             var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
