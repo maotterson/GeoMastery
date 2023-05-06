@@ -6,6 +6,7 @@ namespace GeoMastery.BlazorWASM.Data;
 public class CountryDbContext : DbContext
 {
     public DbSet<Country> Countries { get; set; }
+    public DbSet<Country> Cities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
