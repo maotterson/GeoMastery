@@ -15,6 +15,11 @@ public static class SeedData
 
         SeedCountryAbbreviation(context);
         SeedCountryCities(context);
+        SeedCountryCapitals(context);
+        SeedCountryContinents(context);
+        SeedCountryFlags(context);
+        SeedCountryPopulations(context);
+        SeedCountryRegions(context);
 
         context.SaveChanges();
     }
@@ -36,7 +41,21 @@ public static class SeedData
             var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
-                existingCountry.Cities = country.Cities.Select(cityName => new City { Id = Guid.NewGuid(), Name = cityName, Country = existingCountry, CountryId = existingCountry.Id }).ToList();
+                var citiesToAdd = country.Cities.Select(cityName => new City { Id = Guid.NewGuid(), Name = cityName, Country = existingCountry, CountryId = existingCountry.Id }).ToList();
+                context.Cities.AddRange(citiesToAdd);
+            }
+        }
+    }
+    private static void SeedCountryCapitals(CountryDbContext context)
+    {
+        var countries = LoadJsonData<List<CountryCapitalSeedDto>>("capitals.json");
+        foreach (var country in countries)
+        {
+            var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            var existingCity = context.Cities.SingleOrDefault(c => c.Name == c.Name && c.CountryId == existingCountry.Id); // this should both match name of city AND be the correct country
+            if (existingCountry != null && existingCity != null) // todo: should eventually replace existingCity null check with creation of new entity
+            {
+                existingCountry.CapitalId = existingCity.Id;
             }
         }
     }
