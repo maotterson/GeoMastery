@@ -110,7 +110,14 @@ public static class SeedData
             var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
-                // todo
+                if (int.TryParse(country.Population, out int population))
+                {
+                    existingCountry.Population = population;
+                }
+                else
+                {
+                    existingCountry.Population = 0; // some fields may be null, may need to adjust this depending on how it appears
+                }
             }
         }
     }
