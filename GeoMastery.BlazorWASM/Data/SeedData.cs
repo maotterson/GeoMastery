@@ -122,7 +122,14 @@ public static class SeedData
             var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
-                // todo
+                var existingRegion = context.Regions.SingleOrDefault(c => c.Name == country.Location);
+                if (existingRegion is null)
+                {
+                    existingRegion = new Region { Name = country.Location, Id = Guid.NewGuid() };
+                    context.Regions.Add(existingRegion);
+                }
+                existingCountry.Region = existingRegion;
+                existingCountry.RegionId = existingRegion.Id;
             }
         }
     }
