@@ -17,7 +17,33 @@ public class CountryDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Country>().HasKey(c => c.Name);
-        //todo
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Country>()
+            .HasKey(c => c.Id);
+
+        modelBuilder.Entity<City>()
+            .HasKey(c => c.Id);
+
+        modelBuilder.Entity<Continent>()
+            .HasKey(c => c.Id);
+
+        modelBuilder.Entity<Region>()
+            .HasKey(r => r.Id);
+
+        modelBuilder.Entity<City>()
+            .HasOne(c => c.Country)
+            .WithMany(c => c.Cities)
+            .HasForeignKey(c => c.CountryId);
+
+        modelBuilder.Entity<Country>()
+            .HasOne(c => c.Continent)
+            .WithMany(c => c.Countries)
+            .HasForeignKey(c => c.ContinentId);
+
+        modelBuilder.Entity<Country>()
+            .HasOne(c => c.Region)
+            .WithMany(r => r.Countries)
+            .HasForeignKey(c => c.RegionId);
     }
 }
