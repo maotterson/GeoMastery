@@ -1,6 +1,7 @@
 ﻿using GeoMastery.BlazorWASM.Data.Dto;
 using GeoMastery.Domain.Models;
 using System.Text.Json;
+using System.Transactions;
 
 namespace GeoMastery.BlazorWASM.Data;
 
@@ -13,15 +14,26 @@ public static class SeedData
             return;
         }
 
-        SeedCountryAbbreviation(context);
-        SeedCountryCities(context);
-        SeedCountryCapitals(context);
-        SeedCountryContinents(context);
-        SeedCountryFlags(context);
-        SeedCountryPopulations(context);
-        SeedCountryRegions(context);
+        using (var transaction = new TransactionScope())
+        {
+            try
+            {
+                SeedCountryAbbreviation(context);
+                SeedCountryCities(context);
+                SeedCountryCapitals(context);
+                SeedCountryContinents(context);
+                SeedCountryFlags(context);
+                SeedCountryPopulations(context);
+                SeedCountryRegions(context);
 
-        context.SaveChanges();
+                context.SaveChanges();
+                transaction.Complete();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
+            }
+        }
     }
 
     private static void SeedCountryAbbreviation(CountryDbContext context)
