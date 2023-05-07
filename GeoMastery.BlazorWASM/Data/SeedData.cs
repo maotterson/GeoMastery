@@ -98,7 +98,7 @@ public static class SeedData
             var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
-                // todo
+                existingCountry.FlagBase64 = country.FlagBase64;
             }
         }
     }
