@@ -12,8 +12,8 @@ public class CountryDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //optionsBuilder.UseSqlite("Data Source=countries.db"); currently set to use in-memory db
-        optionsBuilder.UseSqlite("Data Source=:memory:");
+        optionsBuilder.UseSqlite("Data Source=countries.db"); 
+        //optionsBuilder.UseSqlite("Data Source=:memory:");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
