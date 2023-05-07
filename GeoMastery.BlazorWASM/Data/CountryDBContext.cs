@@ -7,6 +7,8 @@ public class CountryDbContext : DbContext
 {
     public DbSet<Country> Countries { get; set; }
     public DbSet<City> Cities { get; set; }
+    public DbSet<Continent> Continents { get; set; }
+    public DbSet<Region> Regions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -16,5 +18,6 @@ public class CountryDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Country>().HasKey(c => c.Name);
+        //todo
     }
 }

@@ -79,7 +79,14 @@ public static class SeedData
             var existingCountry = context.Countries.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
-                // todo
+                var existingContinent = context.Continents.SingleOrDefault(c => c.Name == country.Continent);
+                if (existingContinent is null)
+                {
+                    existingContinent = new Continent { Name = country.Continent, Id = Guid.NewGuid() };
+                    context.Continents.Add(existingContinent);
+                }
+                existingCountry.Continent = existingContinent;
+                existingCountry.ContinentId = existingContinent.Id;
             }
         }
     }
