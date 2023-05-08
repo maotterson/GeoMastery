@@ -53,7 +53,7 @@ public class CountryDbSeeder
         var countries = LoadJsonData<List<CountryCitiesSeedDto>>(directory + "/cities.json");
         foreach (var country in countries)
         {
-            var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
                 var citiesToAdd = country.Cities.Select(cityName => new City { Id = Guid.NewGuid(), Name = cityName, Country = existingCountry, CountryId = existingCountry.Id }).ToList();
@@ -66,8 +66,8 @@ public class CountryDbSeeder
         var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
         foreach (var country in countries)
         {
-            var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
-            var existingCity = _context.Cities.SingleOrDefault(c => c.Name == c.Name && c.CountryId == existingCountry.Id); // this should both match name of city AND be the correct country
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
+            var existingCity = _context.Cities.Local.SingleOrDefault(c => c.Name == c.Name && c.CountryId == existingCountry.Id); // this should both match name of city AND be the correct country
             if (existingCountry != null && existingCity != null) // todo: should eventually replace existingCity null check with creation of new entity
             {
                 existingCountry.CapitalId = existingCity.Id;
@@ -79,10 +79,10 @@ public class CountryDbSeeder
         var countries = LoadJsonData<List<CountryContinentSeedDto>>(directory + "/continents.json");
         foreach (var country in countries)
         {
-            var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
-                var existingContinent = _context.Continents.SingleOrDefault(c => c.Name == country.Continent);
+                var existingContinent = _context.Continents.Local.SingleOrDefault(c => c.Name == country.Continent);
                 if (existingContinent is null)
                 {
                     existingContinent = new Continent { Name = country.Continent, Id = Guid.NewGuid() };
@@ -98,7 +98,7 @@ public class CountryDbSeeder
         var countries = LoadJsonData<List<CountryFlagSeedDto>>(directory + "/flags.json");
         foreach (var country in countries)
         {
-            var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
                 existingCountry.FlagBase64 = country.FlagBase64;
@@ -110,7 +110,7 @@ public class CountryDbSeeder
         var countries = LoadJsonData<List<CountryPopulationSeedDto>>(directory + "/populations.json");
         foreach (var country in countries)
         {
-            var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
                 if (int.TryParse(country.Population, out int population))
@@ -129,10 +129,10 @@ public class CountryDbSeeder
         var countries = LoadJsonData<List<CountryRegionSeedDto>>(directory + "/regions.json");
         foreach (var country in countries)
         {
-            var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
-                var existingRegion = _context.Regions.SingleOrDefault(c => c.Name == country.Location);
+                var existingRegion = _context.Regions.Local.SingleOrDefault(c => c.Name == country.Location);
                 if (existingRegion is null)
                 {
                     existingRegion = new Region { Name = country.Location, Id = Guid.NewGuid() };
