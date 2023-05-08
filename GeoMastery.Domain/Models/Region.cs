@@ -1,8 +1,7 @@
 ﻿namespace GeoMastery.Domain.Models;
-public class City
+public class Region
 {
     public Guid Id { get; set; }
-    public Guid CountryId { get; set; }
-    public Country Country { get; set; }
     public string Name { get; set; }
+    public List<Country> Countries { get; set; }
 }

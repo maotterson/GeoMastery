@@ -1,6 +1,6 @@
-﻿namespace GeoMastery.BlazorWASM.ViewModels;
+﻿namespace GeoMastery.BlazorWASM.Data.Dto;
 
-public class CapitalViewModel
+public class CountryCapitalSeedDto
 {
     public string Capital { get; set; }
     public string Country { get; set; }
