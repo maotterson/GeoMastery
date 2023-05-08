@@ -128,14 +128,7 @@ public class CountryDbSeeder
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
-                if (int.TryParse(country.Population, out int population))
-                {
-                    existingCountry.Population = population;
-                }
-                else
-                {
-                    existingCountry.Population = 0; // some fields may be null, may need to adjust this depending on how it appears
-                }
+                existingCountry.Population = country.Population;
             }
         }
     }

@@ -8,5 +8,5 @@ public class CountryPopulationSeedDto
     public string Country { get; set; }
 
     [JsonPropertyName("population")]
-    public string Population { get; set; }
+    public int Population { get; set; }
 }
