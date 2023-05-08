@@ -7,35 +7,25 @@ namespace GeoMastery.BlazorWASM.Data;
 public class CountryDbSeeder
 {
     private readonly CountryDbContext _context;
-    public void SeedCountries()
+    public void SeedCountries(string directory)
     {
         try
         {
-            Console.WriteLine("preparing to seed countries");
+            _context.Database.EnsureCreated();
             if (_context.Countries.Any())
             {
-                Console.WriteLine("countries exist");
                 return;
             }
-            Console.WriteLine("countries dont exist, seeding now");
 
-            SeedCountryAbbreviation();
-            Console.WriteLine("seeded 1");
-            SeedCountryCities();
-            Console.WriteLine("seeded 2");
-            SeedCountryCapitals();
-            Console.WriteLine("seeded 3");
-            SeedCountryContinents();
-            Console.WriteLine("seeded 4");
-            SeedCountryFlags();
-            Console.WriteLine("seeded 5");
-            SeedCountryPopulations();
-            Console.WriteLine("seeded 6");
-            SeedCountryRegions();
-            Console.WriteLine("seeded 7");
+            SeedCountryAbbreviation(directory);
+            SeedCountryCities(directory);
+            SeedCountryCapitals(directory);
+            SeedCountryContinents(directory);
+            SeedCountryFlags(directory);
+            SeedCountryPopulations(directory);
+            SeedCountryRegions(directory);
 
             _context.SaveChanges();
-            Console.WriteLine("saved changes");
         }
         catch(Exception ex)
         {
@@ -49,21 +39,18 @@ public class CountryDbSeeder
         _context = context;
     }
 
-    private void SeedCountryAbbreviation()
+    private void SeedCountryAbbreviation(string directory)
     {
-        Console.WriteLine("loading json");
-        var countries = LoadJsonData<List<CountryAbbreviationSeedDto>>("abbreviations.json");
-        Console.WriteLine("loaded json");
+        var countries = LoadJsonData<List<CountryAbbreviationSeedDto>>(directory + "/abbreviations.json");
         foreach (var country in countries)
         {
-            Console.WriteLine("adding country: " + country.Country + " " + country.Abbreviation);
             _context.Countries.Add(new Country { Id = Guid.NewGuid(), Name = country.Country, Code = country.Abbreviation });
         }
     }
 
-    private void SeedCountryCities()
+    private void SeedCountryCities(string directory)
     {
-        var countries = LoadJsonData<List<CountryCitiesSeedDto>>("cities.json");
+        var countries = LoadJsonData<List<CountryCitiesSeedDto>>(directory + "/cities.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
@@ -74,9 +61,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryCapitals()
+    private void SeedCountryCapitals(string directory)
     {
-        var countries = LoadJsonData<List<CountryCapitalSeedDto>>("capitals.json");
+        var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
@@ -87,9 +74,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryContinents()
+    private void SeedCountryContinents(string directory)
     {
-        var countries = LoadJsonData<List<CountryContinentSeedDto>>("continents.json");
+        var countries = LoadJsonData<List<CountryContinentSeedDto>>(directory + "/continents.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
@@ -106,9 +93,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryFlags()
+    private void SeedCountryFlags(string directory)
     {
-        var countries = LoadJsonData<List<CountryFlagSeedDto>>("flags.json");
+        var countries = LoadJsonData<List<CountryFlagSeedDto>>(directory + "/flags.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
@@ -118,9 +105,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryPopulations()
+    private void SeedCountryPopulations(string directory)
     {
-        var countries = LoadJsonData<List<CountryPopulationSeedDto>>("populations.json");
+        var countries = LoadJsonData<List<CountryPopulationSeedDto>>(directory + "/populations.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);
@@ -137,9 +124,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryRegions()
+    private void SeedCountryRegions(string directory)
     {
-        var countries = LoadJsonData<List<CountryRegionSeedDto>>("regions.json");
+        var countries = LoadJsonData<List<CountryRegionSeedDto>>(directory + "/regions.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.SingleOrDefault(c => c.Name == country.Country);

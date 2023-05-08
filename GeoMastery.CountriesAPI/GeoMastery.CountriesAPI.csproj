@@ -10,4 +10,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GeoMastery.Domain\GeoMastery.Domain.csproj" />
+    <ProjectReference Include="..\GeoMastery.Persistence\GeoMastery.Persistence.csproj" />
+  </ItemGroup>
+
+    <ItemGroup>
+	    <None Include="SeedData\**" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+
 </Project>
