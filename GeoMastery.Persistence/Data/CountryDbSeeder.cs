@@ -86,6 +86,7 @@ public class CountryDbSeeder
                 var capitalToAddAsCity = new City { Id = Guid.NewGuid(), Name = country.Capital, Country = existingCountry, CountryId = existingCountry.Id };
                 _context.Cities.Add(capitalToAddAsCity);
                 existingCountry.CapitalId = capitalToAddAsCity.Id;
+                existingCountry.Capital = capitalToAddAsCity;
             }
         }
     }

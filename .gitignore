@@ -368,3 +368,5 @@ sample-data/*
 /GeoMastery.BlazorWASM/wwwroot/sample-data
 SeedData/
 countries.db
+countries.db-wal
+countries.db-shm
