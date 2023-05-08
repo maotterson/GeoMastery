@@ -366,3 +366,4 @@ FodyWeavers.xsd
 ignored/*
 sample-data/*
 /GeoMastery.BlazorWASM/wwwroot/sample-data
+SeedData/

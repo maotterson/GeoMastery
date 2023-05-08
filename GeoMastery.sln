@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoMastery.Domain", "GeoMas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoMastery.BlazorWASM", "GeoMastery.BlazorWASM\GeoMastery.BlazorWASM.csproj", "{F45F8B33-7CC1-4024-9836-9D65C833552D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMastery.CountriesAPI", "GeoMastery.CountriesAPI\GeoMastery.CountriesAPI.csproj", "{8A250352-49B3-48C8-A135-96E6BEAE2249}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoMastery.CountriesAPI", "GeoMastery.CountriesAPI\GeoMastery.CountriesAPI.csproj", "{8A250352-49B3-48C8-A135-96E6BEAE2249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMastery.Persistence", "GeoMastery.Persistence\GeoMastery.Persistence.csproj", "{720D90CD-002E-4A29-A1F1-F4E793130A7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoMastery.Persistence", "GeoMastery.Persistence\GeoMastery.Persistence.csproj", "{720D90CD-002E-4A29-A1F1-F4E793130A7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E23DD685-5BA9-465F-ADF7-74A58C4F2AD0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
