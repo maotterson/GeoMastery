@@ -18,8 +18,7 @@ public class CountryDbSeeder
             }
 
             SeedCountryAbbreviation(directory);
-            SeedCountryCities(directory);
-            SeedCountryCapitals(directory);
+            SeedCountryCapitalsWithoutCities(directory);
             SeedCountryContinents(directory);
             SeedCountryFlags(directory);
             SeedCountryPopulations(directory);
@@ -48,6 +47,7 @@ public class CountryDbSeeder
         }
     }
 
+    // currently deprecated, cities.json data file would need to be pruned because it currently doesn't include data that would be relevant
     private void SeedCountryCities(string directory)
     {
         var countries = LoadJsonData<List<CountryCitiesSeedDto>>(directory + "/cities.json");
@@ -61,7 +61,8 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryCapitals(string directory)
+    // currently deprecated, cities.json data file would need to be pruned because it currently doesn't include data that would be relevant
+    private void SeedCountryCapitalsWithCities(string directory)
     {
         var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
         foreach (var country in countries)
@@ -71,6 +72,20 @@ public class CountryDbSeeder
             if (existingCountry != null && existingCity != null) // todo: should eventually replace existingCity null check with creation of new entity
             {
                 existingCountry.CapitalId = existingCity.Id;
+            }
+        }
+    }
+    private void SeedCountryCapitalsWithoutCities(string directory)
+    {
+        var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
+        foreach (var country in countries)
+        {
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
+            if (existingCountry != null)
+            {
+                var capitalToAddAsCity = new City { Id = Guid.NewGuid(), Name = country.Capital, Country = existingCountry, CountryId = existingCountry.Id };
+                _context.Cities.Add(capitalToAddAsCity);
+                existingCountry.CapitalId = capitalToAddAsCity.Id;
             }
         }
     }
