@@ -32,10 +32,10 @@ public class CountryDbContext : DbContext
         modelBuilder.Entity<Region>()
             .HasKey(r => r.Id);
 
-        modelBuilder.Entity<City>()
-            .HasOne(c => c.Country)
-            .WithMany(c => c.Cities)
-            .HasForeignKey(c => c.CountryId);
+        modelBuilder.Entity<Country>()
+            .HasOne(c => c.Capital)
+            .WithOne(c => c.Country)
+            .HasForeignKey<City>(c => c.CountryId);
 
         modelBuilder.Entity<Country>()
             .HasOne(c => c.Continent)

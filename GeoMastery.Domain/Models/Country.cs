@@ -4,7 +4,7 @@ public class Country
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Code { get; set; }
-    public string FlagBase64 { get; set; }
+    public string? FlagBase64 { get; set; }
     public int Population { get; set; }
     public Guid CapitalId { get; set; }
     public City Capital { get; set; }
@@ -12,5 +12,4 @@ public class Country
     public Continent Continent { get; set; }
     public Guid RegionId { get; set; }
     public Region Region { get; set; }
-    public List<City> Cities { get; set; }
 }
