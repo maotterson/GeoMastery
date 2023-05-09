@@ -23,6 +23,7 @@ public class CountryDbSeeder
             SeedCountryFlags(directory);
             SeedCountryPopulations(directory);
             SeedCountryRegions(directory);
+            SeedMissingData();
 
             _context.SaveChanges();
         }
@@ -47,7 +48,6 @@ public class CountryDbSeeder
         }
     }
 
-    
     private void SeedCountryCapitalsWithoutCities(string directory)
     {
         var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
@@ -56,6 +56,10 @@ public class CountryDbSeeder
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
+                if (country.Capital is null)
+                {
+                    country.Capital = "N/A";
+                }
                 var capitalToAddAsCity = new City { Id = Guid.NewGuid(), Name = country.Capital, Country = existingCountry, CountryId = existingCountry.Id };
                 _context.Cities.Add(capitalToAddAsCity);
                 existingCountry.CapitalId = capitalToAddAsCity.Id;
@@ -70,6 +74,10 @@ public class CountryDbSeeder
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
+                if (country.Continent is null)
+                {
+                    country.Continent = "N/A";
+                }
                 var existingContinent = _context.Continents.Local.SingleOrDefault(c => c.Name == country.Continent);
                 if (existingContinent is null)
                 {
@@ -113,6 +121,10 @@ public class CountryDbSeeder
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
             if (existingCountry != null)
             {
+                if (country.Location is null)
+                {
+                    country.Location = "N/A";
+                }
                 var existingRegion = _context.Regions.Local.SingleOrDefault(c => c.Name == country.Location);
                 if (existingRegion is null)
                 {
@@ -123,6 +135,40 @@ public class CountryDbSeeder
                 existingCountry.RegionId = existingRegion.Id;
             }
         }
+    }
+    private void SeedMissingData()
+    {
+        var missingContinent = _context.Continents.Local.SingleOrDefault(c => c.Name == "N/A") ?? new Continent { Id = Guid.NewGuid(), Name = "N/A" };
+        var missingRegion = _context.Regions.Local.SingleOrDefault(c => c.Name == "N/A") ?? new Region { Id = Guid.NewGuid(), Name = "N/A"};
+        _context.Continents.Add(missingContinent);
+        _context.Regions.Add(missingRegion);
+        foreach (var c in _context.Countries.Local)
+        {
+            if (c.Continent == null)
+            {
+                SeedMissingFieldWith(c, missingContinent);
+            }
+            if (c.Region == null)
+            {
+                SeedMissingFieldWith(c, missingRegion);
+            }
+        }
+    }
+    private void SeedMissingFieldWith<T>(Country c, T missingType)
+    {
+        if (missingType is Continent continent)
+        {
+            c.Continent = continent;
+            c.ContinentId = continent.Id;
+            return;
+        }
+        if (missingType is Region region)
+        {
+            c.Region = region;
+            c.RegionId = region.Id;
+            return;
+        }
+        throw new ArgumentException("Missing type must be of type Continent or Region", nameof(missingType));
     }
 
     private static T LoadJsonData<T>(string fileName)
