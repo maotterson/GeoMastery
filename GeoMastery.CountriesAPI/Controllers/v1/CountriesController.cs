@@ -24,6 +24,8 @@ public class CountriesController : ControllerBase
     {
         var countries = await _context.Countries
             .Include(c => c.Region)
+            .Include(c => c.Continent)
+            .Include(c => c.Capital)
             .Where(c => c.RegionId == regionId)
             .ToListAsync();
 
@@ -32,15 +34,17 @@ public class CountriesController : ControllerBase
             return NotFound();
         }
 
-        return countries.ToDto();
+        return Ok(countries.ToDto());
     }
 
     // GET: api/v1/countries/by-continent/{continentId}
     [HttpGet("by-continent/{continentId}")]
-    public async Task<ActionResult<IEnumerable<Country>>> GetCountriesByContinent(Guid continentId)
+    public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByContinent(Guid continentId)
     {
         var countries = await _context.Countries
+            .Include(c => c.Region)
             .Include(c => c.Continent)
+            .Include(c => c.Capital)
             .Where(c => c.ContinentId == continentId)
             .ToListAsync();
 
@@ -49,6 +53,6 @@ public class CountriesController : ControllerBase
             return NotFound();
         }
 
-        return countries;
+        return Ok(countries.ToDto());
     }
 }
