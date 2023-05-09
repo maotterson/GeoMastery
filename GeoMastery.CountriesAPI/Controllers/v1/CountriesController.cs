@@ -1,12 +1,11 @@
 ﻿using GeoMastery.BlazorWASM.Data;
 using GeoMastery.Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GeoMastery.CountriesAPI.Controllers.v1;
 [ApiVersion("1.0")]
-[Route("v{version:apiVersion}/api/[controller]")]
+[Route("api/v1/[controller]")]
 [ApiController]
 public class CountriesController : ControllerBase
 {
