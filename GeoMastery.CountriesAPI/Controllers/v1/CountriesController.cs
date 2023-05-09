@@ -1,4 +1,6 @@
 ﻿using GeoMastery.BlazorWASM.Data;
+using GeoMastery.CountriesAPI.Dto.v1;
+using GeoMastery.CountriesAPI.Extensions.v1;
 using GeoMastery.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +20,7 @@ public class CountriesController : ControllerBase
 
     // GET: api/v1/countries/by-region/{regionId}
     [HttpGet("by-region/{regionId}")]
-    public async Task<ActionResult<IEnumerable<Country>>> GetCountriesByRegion(Guid regionId)
+    public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByRegion(Guid regionId)
     {
         var countries = await _context.Countries
             .Include(c => c.Region)
@@ -30,7 +32,7 @@ public class CountriesController : ControllerBase
             return NotFound();
         }
 
-        return countries;
+        return countries.ToDto();
     }
 
     // GET: api/v1/countries/by-continent/{continentId}

@@ -20,5 +20,5 @@ public class CountryDto
     public int Population { get; set; }
 
     [JsonPropertyName("flag_base_64")]
-    public string FlagBase64 { get; set; }
+    public string? FlagBase64 { get; set; }
 }
