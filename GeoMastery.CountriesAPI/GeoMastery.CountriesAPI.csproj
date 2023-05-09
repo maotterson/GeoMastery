@@ -17,7 +17,7 @@
   </ItemGroup>
 
     <ItemGroup>
-	    <None Include="TestSeedData\**" CopyToOutputDirectory="PreserveNewest" />
+	    <None Include="SeedData\TestSeedData\**" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
