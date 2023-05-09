@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
@@ -16,7 +17,7 @@
   </ItemGroup>
 
     <ItemGroup>
-	    <None Include="TestSeedData\**" CopyToOutputDirectory="PreserveNewest" />
+	    <None Include="SeedData\TestSeedData\**" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
