@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -16,7 +16,41 @@
   </ItemGroup>
 
     <ItemGroup>
-	    <None Include="SeedData\**" CopyToOutputDirectory="PreserveNewest" />
+	    <None Include="TestSeedData\**" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="SeedData\abbreviations.json" />
+      <Content Remove="SeedData\capitals.json" />
+      <Content Remove="SeedData\cities.json" />
+      <Content Remove="SeedData\continents.json" />
+      <Content Remove="SeedData\flags.json" />
+      <Content Remove="SeedData\populations.json" />
+      <Content Remove="SeedData\regions.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="SeedData\abbreviations.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="SeedData\capitals.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="SeedData\cities.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="SeedData\continents.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="SeedData\flags.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="SeedData\populations.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="SeedData\regions.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 

@@ -12,5 +12,4 @@ public class Country
     public Continent Continent { get; set; }
     public Guid RegionId { get; set; }
     public Region Region { get; set; }
-    public List<City> Cities { get; set; }
 }

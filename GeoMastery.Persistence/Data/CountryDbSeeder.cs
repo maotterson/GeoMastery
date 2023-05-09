@@ -47,34 +47,7 @@ public class CountryDbSeeder
         }
     }
 
-    // currently deprecated, cities.json data file would need to be pruned because it currently doesn't include data that would be relevant
-    private void SeedCountryCities(string directory)
-    {
-        var countries = LoadJsonData<List<CountryCitiesSeedDto>>(directory + "/cities.json");
-        foreach (var country in countries)
-        {
-            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
-            if (existingCountry != null)
-            {
-                var citiesToAdd = country.Cities.Select(cityName => new City { Id = Guid.NewGuid(), Name = cityName, Country = existingCountry, CountryId = existingCountry.Id }).ToList();
-                _context.Cities.AddRange(citiesToAdd);
-            }
-        }
-    }
-    // currently deprecated, cities.json data file would need to be pruned because it currently doesn't include data that would be relevant
-    private void SeedCountryCapitalsWithCities(string directory)
-    {
-        var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
-        foreach (var country in countries)
-        {
-            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
-            var existingCity = _context.Cities.Local.SingleOrDefault(c => c.Name == c.Name && c.CountryId == existingCountry.Id); // this should both match name of city AND be the correct country
-            if (existingCountry != null && existingCity != null) // todo: should eventually replace existingCity null check with creation of new entity
-            {
-                existingCountry.CapitalId = existingCity.Id;
-            }
-        }
-    }
+    
     private void SeedCountryCapitalsWithoutCities(string directory)
     {
         var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
@@ -86,7 +59,6 @@ public class CountryDbSeeder
                 var capitalToAddAsCity = new City { Id = Guid.NewGuid(), Name = country.Capital, Country = existingCountry, CountryId = existingCountry.Id };
                 _context.Cities.Add(capitalToAddAsCity);
                 existingCountry.CapitalId = capitalToAddAsCity.Id;
-                existingCountry.Capital = capitalToAddAsCity;
             }
         }
     }
@@ -159,6 +131,35 @@ public class CountryDbSeeder
         {
             var json = file.ReadToEnd();
             return JsonSerializer.Deserialize<T>(json);
+        }
+    }
+
+    // currently deprecated, cities.json data file would need to be pruned because it currently doesn't include data that would be relevant
+    private void SeedCountryCities(string directory)
+    {
+        var countries = LoadJsonData<List<CountryCitiesSeedDto>>(directory + "/cities.json");
+        foreach (var country in countries)
+        {
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
+            if (existingCountry != null)
+            {
+                var citiesToAdd = country.Cities.Select(cityName => new City { Id = Guid.NewGuid(), Name = cityName, Country = existingCountry, CountryId = existingCountry.Id }).ToList();
+                _context.Cities.AddRange(citiesToAdd);
+            }
+        }
+    }
+    // currently deprecated, cities.json data file would need to be pruned because it currently doesn't include data that would be relevant
+    private void SeedCountryCapitalsWithCities(string directory)
+    {
+        var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
+        foreach (var country in countries)
+        {
+            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
+            var existingCity = _context.Cities.Local.SingleOrDefault(c => c.Name == c.Name && c.CountryId == existingCountry.Id); // this should both match name of city AND be the correct country
+            if (existingCountry != null && existingCity != null) // todo: should eventually replace existingCity null check with creation of new entity
+            {
+                existingCountry.CapitalId = existingCity.Id;
+            }
         }
     }
 }

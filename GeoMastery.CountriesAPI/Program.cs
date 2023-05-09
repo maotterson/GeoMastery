@@ -24,7 +24,7 @@ if (app.Environment.IsDevelopment())
 using var scope = app.Services.CreateScope();
 var scopedServices = scope.ServiceProvider;
 var seeder = scopedServices.GetRequiredService<CountryDbSeeder>();
-var seedDirectory = "SeedData";
+var seedDirectory = "TestSeedData";
 seeder.SeedCountries(seedDirectory);
 
 app.UseHttpsRedirection();
