@@ -11,16 +11,16 @@ public class CountryService : ICountryService
     {
         _countryRepository = countryRepository;
     }
-    public async Task<List<Country>> GetCountriesByContinentAsync(Guid id)
+    public async Task<List<Country>> GetCountriesByContinentAsync(string continentSlug)
     {
-        var countries = await _countryRepository.GetCountriesByContinentAsync(id);
+        var countries = await _countryRepository.GetCountriesByContinentAsync(continentSlug);
         countries.MustExistBy(nameof(Continent));
         return countries;
     }
 
-    public async Task<List<Country>> GetCountriesByRegionAsync(Guid id)
+    public async Task<List<Country>> GetCountriesByRegionAsync(string regionSlug)
     {
-        var countries = await _countryRepository.GetCountriesByRegionAsync(id);
+        var countries = await _countryRepository.GetCountriesByRegionAsync(regionSlug);
         countries.MustExistBy(nameof(Region));
         return countries;
     }
