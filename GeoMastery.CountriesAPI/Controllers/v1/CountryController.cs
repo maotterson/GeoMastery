@@ -1,6 +1,7 @@
 ﻿using GeoMastery.BlazorWASM.Data;
 using GeoMastery.CountriesAPI.Dto.v1;
 using GeoMastery.CountriesAPI.Extensions.v1;
+using GeoMastery.CountriesAPI.Services.v1;
 using GeoMastery.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,31 +10,22 @@ namespace GeoMastery.CountriesAPI.Controllers.v1;
 [ApiVersion("1.0")]
 [Route("api/v1/[controller]")]
 [ApiController]
-public class CountriesController : ControllerBase
+public class CountryController : ControllerBase
 {
     private readonly CountryDbContext _context;
+    private readonly ICountryService _countryService;
 
-    public CountriesController(CountryDbContext context)
+    public CountryController(CountryDbContext context, ICountryService countryService)
     {
         _context = context;
+        _countryService = countryService;
     }
 
     // GET: api/v1/countries/by-region/{regionId}
     [HttpGet("by-region/{regionId}")]
     public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByRegion(Guid regionId)
     {
-        var countries = await _context.Countries
-            .Include(c => c.Region)
-            .Include(c => c.Continent)
-            .Include(c => c.Capital)
-            .Where(c => c.RegionId == regionId)
-            .ToListAsync();
-
-        if (countries == null || countries.Count == 0)
-        {
-            return NotFound();
-        }
-
+        var countries = await _countryService.GetCountriesByRegionAsync(regionId);
         return Ok(countries.ToDto());
     }
 
@@ -41,18 +33,7 @@ public class CountriesController : ControllerBase
     [HttpGet("by-continent/{continentId}")]
     public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByContinent(Guid continentId)
     {
-        var countries = await _context.Countries
-            .Include(c => c.Region)
-            .Include(c => c.Continent)
-            .Include(c => c.Capital)
-            .Where(c => c.ContinentId == continentId)
-            .ToListAsync();
-
-        if (countries == null || countries.Count == 0)
-        {
-            return NotFound();
-        }
-
+        var countries = await _countryService.GetCountriesByRegionAsync(continentId);
         return Ok(countries.ToDto());
     }
 }
