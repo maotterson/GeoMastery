@@ -12,25 +12,23 @@ namespace GeoMastery.CountriesAPI.Controllers.v1;
 [ApiController]
 public class CountryController : ControllerBase
 {
-    private readonly CountryDbContext _context;
     private readonly ICountryService _countryService;
 
     public CountryController(CountryDbContext context, ICountryService countryService)
     {
-        _context = context;
         _countryService = countryService;
     }
 
-    // GET: api/v1/countries/by-region/{regionId}
-    [HttpGet("by-region/{regionId}")]
+    // GET: api/v1/countries/by-region/{regionSlug}
+    [HttpGet("by-region/{regionSlug}")]
     public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByRegion(string regionSlug)
     {
         var countries = await _countryService.GetCountriesByRegionAsync(regionSlug);
         return Ok(countries.ToDto());
     }
 
-    // GET: api/v1/countries/by-continent/{continentId}
-    [HttpGet("by-continent/{continentId}")]
+    // GET: api/v1/countries/by-continent/{continentSlug}
+    [HttpGet("by-continent/{continentSlug}")]
     public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByContinent(string continentSlug)
     {
         var countries = await _countryService.GetCountriesByRegionAsync(continentSlug);
