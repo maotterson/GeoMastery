@@ -31,7 +31,7 @@ public class CountryController : ControllerBase
     [HttpGet("by-continent/{continentSlug}")]
     public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByContinent(string continentSlug)
     {
-        var countries = await _countryService.GetCountriesByRegionAsync(continentSlug);
+        var countries = await _countryService.GetCountriesByContinentAsync(continentSlug);
         return Ok(countries.ToDto());
     }
 }

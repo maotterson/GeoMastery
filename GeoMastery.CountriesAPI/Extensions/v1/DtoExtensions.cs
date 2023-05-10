@@ -12,7 +12,7 @@ public static class DtoExtensions
             Country = country.Name,
             Code = country.Code,
             Slug = country.Slug,
-            Capital = country.Capital.Name,
+            Capital = country.Capital?.Name,
             Continent = country.Continent.Name,
             Region = country.Region.Name,
             Population = country.Population,
