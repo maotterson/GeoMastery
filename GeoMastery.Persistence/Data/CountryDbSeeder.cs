@@ -1,5 +1,6 @@
 ﻿using GeoMastery.BlazorWASM.Data.Dto;
 using GeoMastery.Domain.Models;
+using GeoMastery.Domain.Utilities;
 using System.Text.Json;
 
 namespace GeoMastery.BlazorWASM.Data;
@@ -44,7 +45,12 @@ public class CountryDbSeeder
         var countries = LoadJsonData<List<CountryAbbreviationSeedDto>>(directory + "/abbreviations.json");
         foreach (var country in countries)
         {
-            _context.Countries.Add(new Country { Id = Guid.NewGuid(), Name = country.Country, Code = country.Abbreviation });
+            _context.Countries.Add(new Country 
+            {   
+                Id = Guid.NewGuid(), 
+                Name = country.Country, 
+                Slug = StringUtilities.Slugify(country.Country),
+                Code = country.Abbreviation });
         }
     }
 
@@ -60,7 +66,13 @@ public class CountryDbSeeder
                 {
                     country.Capital = "N/A";
                 }
-                var capitalToAddAsCity = new City { Id = Guid.NewGuid(), Name = country.Capital, Country = existingCountry, CountryId = existingCountry.Id };
+                var capitalToAddAsCity = new City 
+                { 
+                    Id = Guid.NewGuid(), 
+                    Name = country.Capital, 
+                    Country = existingCountry, 
+                    CountryId = existingCountry.Id };
+
                 _context.Cities.Add(capitalToAddAsCity);
                 existingCountry.CapitalId = capitalToAddAsCity.Id;
             }
@@ -81,7 +93,12 @@ public class CountryDbSeeder
                 var existingContinent = _context.Continents.Local.SingleOrDefault(c => c.Name == country.Continent);
                 if (existingContinent is null)
                 {
-                    existingContinent = new Continent { Name = country.Continent, Id = Guid.NewGuid() };
+                    existingContinent = new Continent 
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = country.Continent,
+                        Slug = StringUtilities.Slugify(country.Continent)
+                    };
                     _context.Continents.Add(existingContinent);
                 }
                 existingCountry.Continent = existingContinent;
@@ -128,7 +145,12 @@ public class CountryDbSeeder
                 var existingRegion = _context.Regions.Local.SingleOrDefault(c => c.Name == country.Location);
                 if (existingRegion is null)
                 {
-                    existingRegion = new Region { Name = country.Location, Id = Guid.NewGuid() };
+                    existingRegion = new Region
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = country.Location, 
+                        Slug = StringUtilities.Slugify(country.Location)
+                    };
                     _context.Regions.Add(existingRegion);
                 }
                 existingCountry.Region = existingRegion;
@@ -138,8 +160,20 @@ public class CountryDbSeeder
     }
     private void SeedMissingData()
     {
-        var missingContinent = _context.Continents.Local.SingleOrDefault(c => c.Name == "N/A") ?? new Continent { Id = Guid.NewGuid(), Name = "N/A" };
-        var missingRegion = _context.Regions.Local.SingleOrDefault(c => c.Name == "N/A") ?? new Region { Id = Guid.NewGuid(), Name = "N/A"};
+        var missingContinent = _context.Continents.Local.SingleOrDefault(c => c.Name == "N/A") 
+            ?? new Continent 
+            { 
+                Id = Guid.NewGuid(), 
+                Name = "N/A",
+                Slug = StringUtilities.Slugify("N/A")
+            };
+        var missingRegion = _context.Regions.Local.SingleOrDefault(c => c.Name == "N/A") 
+            ?? new Region 
+            { 
+                Id = Guid.NewGuid(), 
+                Name = "N/A",
+                Slug = StringUtilities.Slugify("N/A")
+            };
         _context.Continents.Add(missingContinent);
         _context.Regions.Add(missingRegion);
         foreach (var c in _context.Countries.Local)
