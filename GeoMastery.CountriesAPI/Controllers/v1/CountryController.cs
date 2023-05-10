@@ -26,13 +26,6 @@ public class CountryController : ControllerBase
     public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByRegion(Guid regionId)
     {
         var countries = await _countryService.GetCountriesByRegionAsync(regionId);
-        
-
-        if (countries == null || countries.Count == 0)
-        {
-            return NotFound();
-        }
-
         return Ok(countries.ToDto());
     }
 
@@ -41,12 +34,6 @@ public class CountryController : ControllerBase
     public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountriesByContinent(Guid continentId)
     {
         var countries = await _countryService.GetCountriesByRegionAsync(continentId);
-
-        if (countries == null || countries.Count == 0)
-        {
-            return NotFound();
-        }
-
         return Ok(countries.ToDto());
     }
 }
