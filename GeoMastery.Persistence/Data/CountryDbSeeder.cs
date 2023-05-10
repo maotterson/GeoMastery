@@ -64,7 +64,7 @@ public class CountryDbSeeder
             {
                 if (country.Capital is null)
                 {
-                    return;
+                    continue;
                 }
                 var capitalToAddAsCity = new City 
                 { 
