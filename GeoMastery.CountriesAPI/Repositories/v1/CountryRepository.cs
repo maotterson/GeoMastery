@@ -12,25 +12,25 @@ public class CountryRepository : ICountryRepository
         _context = dbContext;
     }
 
-    public async Task<List<Country>> GetCountriesByContinentAsync(Guid id)
+    public async Task<List<Country>> GetCountriesByContinentAsync(string continentSlug)
     {
         var countries = await _context.Countries
             .Include(c => c.Region)
             .Include(c => c.Continent)
             .Include(c => c.Capital)
-            .Where(c => c.ContinentId == id)
+            .Where(c => c.Continent.Slug == continentSlug)
             .ToListAsync();
 
         return countries;
     }
 
-    public async Task<List<Country>> GetCountriesByRegionAsync(Guid id)
+    public async Task<List<Country>> GetCountriesByRegionAsync(string regionSlug)
     {
         var countries = await _context.Countries
            .Include(c => c.Region)
            .Include(c => c.Continent)
            .Include(c => c.Capital)
-           .Where(c => c.RegionId == id)
+           .Where(c => c.Region.Slug == regionSlug)
            .ToListAsync();
 
         return countries;
