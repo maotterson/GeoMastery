@@ -9,11 +9,11 @@ namespace GeoMastery.CountriesAPI.Controllers.v1;
 [ApiVersion("1.0")]
 [Route("api/v1/[controller]")]
 [ApiController]
-public class CountriesController : ControllerBase
+public class CountryController : ControllerBase
 {
     private readonly CountryDbContext _context;
 
-    public CountriesController(CountryDbContext context)
+    public CountryController(CountryDbContext context)
     {
         _context = context;
     }
