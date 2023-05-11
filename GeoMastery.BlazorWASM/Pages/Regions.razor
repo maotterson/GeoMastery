@@ -1,0 +1,39 @@
+﻿@page "/regions"
+
+@using GeoMastery.CountriesAPI.Contracts.Dto.v1
+@using Microsoft.Extensions.Options
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@inject HttpClient Http
+
+<h3>Regions</h3>
+
+<ul>
+    @foreach (var region in regions)
+    {
+        <li>@region.Name</li>
+    }
+</ul>
+
+@code {
+    private List<RegionDto> regions = new List<RegionDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var baseUrl = Configuration["CountriesApi:BaseUrl"];
+            var regionUri = $"{baseUrl}Region";
+            regions = await Http.GetFromJsonAsync<List<RegionDto>>(regionUri) ?? throw new NullReferenceException();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
