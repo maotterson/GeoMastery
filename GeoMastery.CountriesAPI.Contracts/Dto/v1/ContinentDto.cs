@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace GeoMastery.CountriesAPI.Dto.v1;
+namespace GeoMastery.CountriesAPI.Contracts.Dto.v1;
 
 public class ContinentDto
 {
