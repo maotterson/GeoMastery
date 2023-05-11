@@ -18,7 +18,18 @@ builder.Services.AddScoped<IContinentService, ContinentService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); 
+builder.Services.AddSwaggerGen();
+
+// Define Cors policy
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -40,6 +51,7 @@ app.UseHttpsRedirection();
 
 // Register middleware
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
