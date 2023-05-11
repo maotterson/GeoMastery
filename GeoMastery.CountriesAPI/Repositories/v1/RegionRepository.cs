@@ -15,6 +15,7 @@ public class RegionRepository : IRegionRepository
     public async Task<List<Region>> GetAllRegionsAsync()
     {
         var regions = await _context.Regions
+            .OrderBy(r => r.Name)
             .ToListAsync();
 
         return regions;
