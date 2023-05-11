@@ -23,9 +23,9 @@
     {
         try
         {
-            var apiUrl = Configuration["CountriesApi:BaseUrl"];
-            var requestEndpoint = $"{apiUrl}Region";
-            regions = await Http.GetFromJsonAsync<List<RegionDto>>(apiUrl) ?? throw new NullReferenceException();
+            var baseUrl = Configuration["CountriesApi:BaseUrl"];
+            var regionUri = $"{baseUrl}Region";
+            regions = await Http.GetFromJsonAsync<List<RegionDto>>(regionUri) ?? throw new NullReferenceException();
         }
         catch (HttpRequestException ex)
         {
