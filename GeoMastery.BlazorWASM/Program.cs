@@ -1,5 +1,4 @@
 using GeoMastery.BlazorWASM;
-using GeoMastery.BlazorWASM.Config;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
