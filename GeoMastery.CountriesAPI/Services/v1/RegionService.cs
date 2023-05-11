@@ -11,7 +11,7 @@ public class RegionService : IRegionService
     {
         _regionRepository = regionRepository;
     }
-    public async Task<List<Country>> GetAllRegionsAsync()
+    public async Task<List<Region>> GetAllRegionsAsync()
     {
         var regions = await _regionRepository.GetAllRegionsAsync();
         return regions;
