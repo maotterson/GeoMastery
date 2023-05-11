@@ -1,18 +1,14 @@
 ﻿@page "/capitals"
 
-@using GeoMastery.BlazorWASM.Data.Dto
 @using GeoMastery.Domain.Models
 @inject HttpClient Http
 
 <PageTitle>Capitals of the World</PageTitle>
 
 <h3>Capitals</h3>
-@foreach(CountryCapitalSeedDto capital in capitals)
-{
-    <p>@capital.Country - @capital.Capital</p>
-}
 
 @code {
+    /*
     private List<CountryCapitalSeedDto> capitals = new List<CountryCapitalSeedDto>();
 
     protected override async Task OnInitializedAsync()
@@ -20,4 +16,5 @@
         var capitalArray = await Http.GetFromJsonAsync<CountryCapitalSeedDto[]>("sample-data/capitals.json");
         capitals = capitalArray.ToList<CountryCapitalSeedDto>();
     }
+    */
 }
