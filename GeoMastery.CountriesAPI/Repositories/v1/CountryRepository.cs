@@ -19,6 +19,7 @@ public class CountryRepository : ICountryRepository
             .Include(c => c.Continent)
             .Include(c => c.Capital)
             .Where(c => c.Continent.Slug == continentSlug)
+            .OrderBy(c => c.Name)
             .ToListAsync();
 
         return countries;
@@ -31,6 +32,7 @@ public class CountryRepository : ICountryRepository
            .Include(c => c.Continent)
            .Include(c => c.Capital)
            .Where(c => c.Region.Slug == regionSlug)
+           .OrderBy(c => c.Name)
            .ToListAsync();
 
         return countries;

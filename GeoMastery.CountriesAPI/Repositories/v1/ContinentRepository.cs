@@ -15,6 +15,7 @@ public class ContinentRepository : IContinentRepository
     public async Task<List<Continent>> GetAllContinentsAsync()
     {
         var continents = await _context.Continents
+            .OrderBy(c => c.Name)
             .ToListAsync();
 
         return continents;
