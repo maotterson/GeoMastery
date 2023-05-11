@@ -24,4 +24,18 @@ public static class DtoExtensions
     {
         return countries.Select(c => c.ToDto()).ToList();
     }
+
+    public static RegionDto ToDto(this Region region)
+    {
+        return new RegionDto
+        {
+            Name = region.Name,
+            Slug = region.Slug
+        };
+    }
+
+    public static List<RegionDto> ToDto(this List<Region> regions)
+    {
+        return regions.Select(r => r.ToDto()).ToList();
+    }
 }
