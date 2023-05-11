@@ -38,4 +38,18 @@ public static class DtoExtensions
     {
         return regions.Select(r => r.ToDto()).ToList();
     }
+
+    public static ContinentDto ToDto(this Continent continent)
+    {
+        return new ContinentDto
+        {
+            Name = continent.Name,
+            Slug = continent.Slug
+        };
+    }
+
+    public static List<ContinentDto> ToDto(this List<Continent> continents)
+    {
+        return continents.Select(r => r.ToDto()).ToList();
+    }
 }
