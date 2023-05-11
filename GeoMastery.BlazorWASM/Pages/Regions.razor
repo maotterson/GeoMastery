@@ -1,6 +1,11 @@
 ﻿@page "/regions"
+
+@using GeoMastery.BlazorWASM.Config
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
+@using Microsoft.Extensions.Options
+
 @inject HttpClient Http
+@inject IOptions<ApiConfig> ApiConfigOptions
 
 <h3>Regions</h3>
 
@@ -18,7 +23,9 @@
     {
         try
         {
-            regions = await Http.GetFromJsonAsync<List<RegionDto>>("/api/v1/regions");
+            var apiUrl = ApiConfigOptions.Value.CountriesApiBaseUrl;
+            var requestEndpoint = $"{apiUrl}Region";
+            regions = await Http.GetFromJsonAsync<List<RegionDto>>(apiUrl) ?? throw new NullReferenceException();
         }
         catch (HttpRequestException ex)
         {

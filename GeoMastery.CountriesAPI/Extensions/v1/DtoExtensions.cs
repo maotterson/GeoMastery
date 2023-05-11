@@ -1,4 +1,4 @@
-﻿using GeoMastery.CountriesAPI.Dto.v1;
+﻿using GeoMastery.CountriesAPI.Contracts.Dto.v1;
 using GeoMastery.Domain.Models;
 
 namespace GeoMastery.CountriesAPI.Extensions.v1;
