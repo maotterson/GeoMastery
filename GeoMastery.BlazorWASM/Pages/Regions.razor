@@ -1,8 +1,32 @@
 ﻿@page "/regions"
+@using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @inject HttpClient Http
 
 <h3>Regions</h3>
 
-@code {
+<ul>
+    @foreach (var region in regions)
+    {
+        <li>@region.Name</li>
+    }
+</ul>
 
+@code {
+    private List<RegionDto> regions = new List<RegionDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            regions = await Http.GetFromJsonAsync<List<RegionDto>>("/api/v1/regions");
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
 }
