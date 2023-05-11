@@ -1,5 +1,5 @@
 ﻿using GeoMastery.BlazorWASM.Data;
-using GeoMastery.CountriesAPI.Dto.v1;
+using GeoMastery.CountriesAPI.Contracts.Dto.v1;
 using GeoMastery.CountriesAPI.Extensions.v1;
 using GeoMastery.CountriesAPI.Services.v1;
 using Microsoft.AspNetCore.Mvc;
