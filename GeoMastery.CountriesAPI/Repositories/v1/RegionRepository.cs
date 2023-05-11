@@ -15,7 +15,6 @@ public class RegionRepository : IRegionRepository
     public async Task<List<Region>> GetAllRegionsAsync()
     {
         var regions = await _context.Regions
-            .Include(r => r.Countries)
             .ToListAsync();
 
         return regions;
