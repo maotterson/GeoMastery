@@ -24,4 +24,12 @@ public class ContinentController : ControllerBase
         var continents = await _continentService.GetAllContinentsAsync();
         return Ok(continents.ToDto());
     }
+
+    // GET: api/v1/continents/{slug}
+    [HttpGet("")]
+    public async Task<ActionResult<ContinentDto>> GetContinentBySlug(string slug)
+    {
+        var continent = await _continentService.GetContinentBySlugAsync(slug);
+        return Ok(continent.ToDto());
+    }
 }

@@ -24,4 +24,12 @@ public class RegionController : ControllerBase
         var regions = await _regionService.GetAllRegionsAsync();
         return Ok(regions.ToDto());
     }
+
+    // GET: api/v1/regions/{slug}
+    [HttpGet("")]
+    public async Task<ActionResult<RegionDto>> GetRegionBySlug(string slug)
+    {
+        var region = await _regionService.GetRegionBySlugAsync(slug);
+        return Ok(region.ToDto());
+    }
 }
