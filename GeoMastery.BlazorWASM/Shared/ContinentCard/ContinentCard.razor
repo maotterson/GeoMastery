@@ -1,5 +1,17 @@
-﻿<h3>ContinentCard</h3>
+﻿@using System.Collections.Generic
+@using GeoMastery.CountriesAPI.Contracts.Dto.v1
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <NavLink class="nav-link" href="@($"/continent/{ContinentCardVM.Slug}")" Match="NavLinkMatch.All">
+                @ContinentCardVM.Name
+            </NavLink>
+        </h3>
+    </div>
+</div>
 
 @code {
-
+    [Parameter]
+    public ContinentCardViewModel ContinentCardVM { get; set; }
 }
