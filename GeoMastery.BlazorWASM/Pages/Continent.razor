@@ -1,0 +1,42 @@
+﻿@page "/continents/{Slug}"
+
+@using GeoMastery.CountriesAPI.Contracts.Dto.v1
+@using Microsoft.Extensions.Options
+@using Microsoft.Extensions.Configuration
+
+@inject IConfiguration Configuration
+@inject HttpClient Http
+
+<h3>@Slug</h3>
+<ul>
+    @foreach(var country in countries)
+    {
+        <li>@country.Country</li>
+    }
+</ul>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Slug { get; set; } = default!;
+    public ContinentDto ContinentDto { get; set; } = default!; // todo: must implement get region by slug method
+    public List<CountryDto> countries { get; set; } = new List<CountryDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var continentSlug = Slug;
+            var baseUrl = Configuration["CountriesApi:BaseUrl"];
+            var countriesUri = $"{baseUrl}Country/by-continent/{continentSlug}";
+            countries = await Http.GetFromJsonAsync<List<CountryDto>>(countriesUri) ?? throw new NullReferenceException();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
