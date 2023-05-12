@@ -1,0 +1,39 @@
+﻿@page "/continents"
+
+@using GeoMastery.CountriesAPI.Contracts.Dto.v1
+@using Microsoft.Extensions.Options
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@inject HttpClient Http
+
+<h3>Continents</h3>
+
+<ul>
+    @foreach (var continent in continents)
+    {
+        <li>@continent.Name</li>
+    }
+</ul>
+
+@code {
+    private List<ContinentDto> continents = new List<ContinentDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var baseUrl = Configuration["CountriesApi:BaseUrl"];
+            var continentUri = $"{baseUrl}Continent";
+            continents = await Http.GetFromJsonAsync<List<ContinentDto>>(continentUri) ?? throw new NullReferenceException();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
