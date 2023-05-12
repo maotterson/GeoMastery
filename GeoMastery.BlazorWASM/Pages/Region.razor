@@ -2,6 +2,7 @@
 
 @using GeoMastery.BlazorWASM.Extensions
 @using GeoMastery.BlazorWASM.Services
+@using GeoMastery.BlazorWASM.Shared.BackButton
 @using GeoMastery.BlazorWASM.Shared.CountrySummaryCard
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @using Microsoft.Extensions.Options
@@ -12,6 +13,7 @@
 @inject HttpClient Http
 
 <h3>@_regionDto.Name</h3>
+<BackButton/>
 <div class="row">
 @foreach(var country in countries)
 {

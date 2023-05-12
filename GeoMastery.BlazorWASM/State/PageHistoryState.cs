@@ -2,15 +2,19 @@
 
 public class PageHistoryState
 {
-    private List<string> previousPages;
+    private Stack<string> previousPages;
 
     public PageHistoryState()
     {
-        previousPages = new List<string>();
+        previousPages = new Stack<string>();
     }
     public void AddPageToHistory(string pageName)
     {
-        previousPages.Add(pageName);
+        previousPages.Push(pageName);
+    }
+    public void RemovePageFromHistory()
+    {
+        previousPages.Pop();
     }
 
     public string GetGoBackPage()
@@ -18,7 +22,7 @@ public class PageHistoryState
         if (previousPages.Count > 1)
         {
             // You add a page on initialization, so you need to return the 2nd from the last
-            return previousPages.ElementAt(previousPages.Count - 2);
+            return previousPages.Peek();
         }
 
         // Can't go back because you didn't navigate enough
