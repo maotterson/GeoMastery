@@ -17,4 +17,9 @@ public class RegionService : IRegionService
         return regions;
     }
 
+    public async Task<Region> GetRegionBySlugAsync(string slug)
+    {
+        var region = await _regionRepository.GetRegionBySlugAsync(slug);
+        return region;
+    }
 }

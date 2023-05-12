@@ -16,5 +16,10 @@ public class ContinentService : IContinentService
         var continents = await _continentRepository.GetAllContinentsAsync();
         return continents;
     }
+    public async Task<Continent> GetContinentBySlugAsync(string slug)
+    {
+        var region = await _continentRepository.GetContinentBySlugAsync(slug);
+        return region;
+    }
 
 }
