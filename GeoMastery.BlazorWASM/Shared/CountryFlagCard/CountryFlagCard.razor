@@ -8,8 +8,8 @@
 </div>
 
 @code {
-    [Parameter]
-    public CountryFlagCardViewModel CardViewModel { get; set; }
+    [Parameter, EditorRequired]
+    public CountryFlagCardViewModel CardViewModel { get; set; } = default!;
 
 
 }
