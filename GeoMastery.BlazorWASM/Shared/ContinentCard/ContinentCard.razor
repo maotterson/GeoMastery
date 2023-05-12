@@ -12,6 +12,6 @@
 </div>
 
 @code {
-    [Parameter]
-    public ContinentCardViewModel ContinentCardVM { get; set; }
+    [Parameter, EditorRequired]
+    public ContinentCardViewModel ContinentCardVM { get; set; } = default!;
 }
