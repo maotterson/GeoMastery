@@ -1,4 +1,4 @@
-﻿@page "/regions"
+﻿@page "/regions/{slug}"
 
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @using Microsoft.Extensions.Options
@@ -7,25 +7,21 @@
 @inject IConfiguration Configuration
 @inject HttpClient Http
 
-<h3>Regions</h3>
-
-<ul>
-    @foreach (var region in regions)
-    {
-        <li>@region.Name</li>
-    }
-</ul>
+<h3>@PageModel.Name</h3>
 
 @code {
-    private List<RegionDto> regions = new List<RegionDto>();
+    [Parameter, EditorRequired]
+    public RegionPageModel PageModel { get; set; } = default!;
+    public List<CountryDto> countries { get; set; } = new List<CountryDto>();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            var regionSlug = PageModel.Slug;
             var baseUrl = Configuration["CountriesApi:BaseUrl"];
-            var regionUri = $"{baseUrl}Region";
-            regions = await Http.GetFromJsonAsync<List<RegionDto>>(regionUri) ?? throw new NullReferenceException();
+            var countriesUri = $"{baseUrl}Country/by-region/{regionSlug}";
+            countries = await Http.GetFromJsonAsync<List<CountryDto>>(countriesUri) ?? throw new NullReferenceException();
         }
         catch (HttpRequestException ex)
         {
