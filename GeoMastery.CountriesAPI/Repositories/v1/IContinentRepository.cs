@@ -5,4 +5,5 @@ namespace GeoMastery.CountriesAPI.Repositories.v1;
 public interface IContinentRepository
 {
     Task<List<Continent>> GetAllContinentsAsync();
+    Task<Continent> GetContinentBySlugAsync(string slug);
 }
