@@ -1,4 +1,5 @@
 ﻿using GeoMastery.BlazorWASM.Data;
+using GeoMastery.CountriesAPI.Exceptions;
 using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,4 +22,11 @@ public class ContinentRepository : IContinentRepository
         return continents;
     }
 
+    public async Task<Continent> GetContinentBySlugAsync(string slug)
+    {
+        var continent = await _context.Continents
+            .FirstOrDefaultAsync(c => c.Slug == slug) ?? throw new NotFoundException($"Matching continent not found for {slug}.");
+
+        return continent;
+    }
 }

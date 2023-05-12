@@ -1,4 +1,5 @@
 ﻿using GeoMastery.BlazorWASM.Data;
+using GeoMastery.CountriesAPI.Exceptions;
 using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,5 +21,11 @@ public class RegionRepository : IRegionRepository
 
         return regions;
     }
+    public async Task<Region> GetRegionBySlugAsync(string slug)
+    {
+        var region = await _context.Regions
+            .FirstOrDefaultAsync(c => c.Slug == slug) ?? throw new NotFoundException($"Matching region not found for {slug}.");
 
+        return region;
+    }
 }
