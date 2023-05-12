@@ -1,5 +1,7 @@
 ﻿@page "/regions/{Slug}"
 
+@using GeoMastery.BlazorWASM.Extensions
+@using GeoMastery.BlazorWASM.Shared.CountrySummaryCard
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @using Microsoft.Extensions.Options
 @using Microsoft.Extensions.Configuration
@@ -8,12 +10,14 @@
 @inject HttpClient Http
 
 <h3>@Slug</h3>
-<ul>
-    @foreach(var country in countries)
-    {
-        <li>@country.Country</li>
-    }
-</ul>
+<div class="row">
+@foreach(var country in countries)
+{
+    <div class="col-md-3" style="margin-bottom: 1rem;">
+        <CountrySummaryCard CardViewModel="country.ToSummaryCardViewModel()"/>
+    </div>
+}
+</div>
 
 @code {
     [Parameter, EditorRequired]
