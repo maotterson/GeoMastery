@@ -1,0 +1,16 @@
+﻿@using System.Text.RegularExpressions;
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">@CardViewModel.Country</h3>
+        <img class="card-img-top" src="@($"{CardViewModel.FlagBase64}")" alt="@CardViewModel.Country flag" />
+        <p>Capital: @CardViewModel.Capital</p>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public CountrySummaryCardViewModel CardViewModel { get; set; } = default!;
+
+
+}
