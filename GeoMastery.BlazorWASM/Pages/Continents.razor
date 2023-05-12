@@ -1,5 +1,7 @@
 ﻿@page "/continents"
 
+@using GeoMastery.BlazorWASM.Extensions
+@using GeoMastery.BlazorWASM.Shared.ContinentCard
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @using Microsoft.Extensions.Options
 @using Microsoft.Extensions.Configuration
@@ -9,12 +11,14 @@
 
 <h3>Continents</h3>
 
-<ul>
-    @foreach (var continent in continents)
-    {
-        <li>@continent.Name</li>
-    }
-</ul>
+<div class="row">
+@foreach(var continentDto in continents)
+{
+    <div class="col-md-4" style="margin-bottom: 1rem;">
+        <ContinentCard ContinentCardVM="continentDto.ToViewModel()"/>
+    </div>
+}
+</div>
 
 @code {
     private List<ContinentDto> continents = new List<ContinentDto>();

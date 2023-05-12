@@ -1,6 +1,8 @@
 ﻿@page "/regions"
 
+@using GeoMastery.BlazorWASM.Extensions
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
+@using GeoMastery.BlazorWASM.Shared.RegionCard
 @using Microsoft.Extensions.Options
 @using Microsoft.Extensions.Configuration
 
@@ -9,12 +11,14 @@
 
 <h3>Regions</h3>
 
-<ul>
-    @foreach (var region in regions)
-    {
-        <li>@region.Name</li>
-    }
-</ul>
+<div class="row">
+@foreach(var regionDto in regions)
+{
+    <div class="col-md-4" style="margin-bottom: 1rem;">
+        <RegionCard RegionCardVM="regionDto.ToViewModel()"/>
+    </div>
+}
+</div>
 
 @code {
     private List<RegionDto> regions = new List<RegionDto>();
