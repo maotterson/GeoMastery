@@ -1,4 +1,4 @@
-﻿@page "/regions/{slug}"
+﻿@page "/regions/{Slug}"
 
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @using Microsoft.Extensions.Options
@@ -11,6 +11,7 @@
 
 @code {
     [Parameter, EditorRequired]
+    public string Slug { get; set; } = default!;
     public RegionPageModel PageModel { get; set; } = default!;
     public List<CountryDto> countries { get; set; } = new List<CountryDto>();
 
