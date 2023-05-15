@@ -9,7 +9,7 @@
 @using Microsoft.Extensions.Configuration
 
 @inject IConfiguration Configuration
-@inject ICountriesService CountriesService
+@inject CountriesCachingService CountriesService
 @inject HttpClient Http
 
 <h3>@_regionDto.Name</h3>
@@ -37,8 +37,7 @@
             _regionDto = await CountriesService.GetRegionBySlugAsync(Slug);
             var baseUrl = Configuration["CountriesApi:BaseUrl"];
             var countriesUri = $"{baseUrl}Country/by-region/{Slug}";
-            countries = await Http.GetFromJsonAsync
-    <List<CountryDto>>(countriesUri) ?? throw new NullReferenceException();
+            countries = await Http.GetFromJsonAsync<List<CountryDto>>(countriesUri) ?? throw new NullReferenceException();
         }
         catch (HttpRequestException ex)
         {
