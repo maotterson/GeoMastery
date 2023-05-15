@@ -1,12 +1,8 @@
 using GeoMastery.BlazorWASM;
-using GeoMastery.BlazorWASM.Services;
 using GeoMastery.Persistence.Repositories.v1;
 using GeoMastery.Persistence.Services.v1;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
