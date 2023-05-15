@@ -4,32 +4,34 @@ using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using GeoMastery.Persistence.Repositories.v1;
 using SqliteWasmHelper;
+using GeoMastery.BlazorWASM.Repositories.ApiClient;
 
 namespace GeoMastery.BlazorWASM.Repositories.Local;
 
 public class RegionHybridRepository : IRegionRepository
 {
-    private readonly ISqliteWasmDbContextFactory<CountryDbContext> _factory;
-    public RegionHybridRepository(ISqliteWasmDbContextFactory<CountryDbContext> factory)
+    private readonly RegionLocalRepository _localRepository;
+    private readonly RegionApiClient _apiClient;
+    public RegionHybridRepository(RegionLocalRepository local, RegionApiClient apiClient)
     {
-        _factory = factory;
+        _localRepository = local;
+        _apiClient = apiClient;
     }
 
     public async Task<List<Region>> GetAllRegionsAsync()
     {
-        using var ctx = await _factory.CreateDbContextAsync();
-        var regions = await ctx.Regions
-            .OrderBy(r => r.Name)
-            .ToListAsync();
-
+        var regions = await _localRepository.GetAllRegionsAsync();
+        if (regions.Any())
+        {
+            return regions;
+        }
+        regions = await _apiClient.GetAllRegionsAsync();
+        await _localRepository.AddRangeAsync(regions.ToArray());
         return regions;
     }
+
     public async Task<Region> GetRegionBySlugAsync(string slug)
     {
-        using var ctx = await _factory.CreateDbContextAsync();
-        var region = await ctx.Regions
-            .FirstOrDefaultAsync(c => c.Slug == slug) ?? throw new NotFoundException($"Matching region not found for {slug}.");
-
-        return region;
+        return await _localRepository.GetRegionBySlugAsync(slug);
     }
 }

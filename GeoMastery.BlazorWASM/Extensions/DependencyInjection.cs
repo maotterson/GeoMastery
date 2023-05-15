@@ -14,7 +14,7 @@ public static class DependencyInjection
     {
         if (hybrid)
         {
-            services.UseLocalRepositories();
+            services.UseHybridRepositories();
         }
         else
         {
@@ -31,6 +31,12 @@ public static class DependencyInjection
 
     public static void UseHybridRepositories(this IServiceCollection services)
     {
+        services.AddScoped<CountryLocalRepository>();
+        services.AddScoped<ContinentLocalRepository>();
+        services.AddScoped<RegionLocalRepository>();
+        services.AddScoped<CountryApiClient>();
+        services.AddScoped<ContinentApiClient>();
+        services.AddScoped<RegionApiClient>();
         services.AddScoped<ICountryRepository, CountryHybridRepository>();
         services.AddScoped<IContinentRepository, ContinentHybridRepository>();
         services.AddScoped<IRegionRepository, RegionHybridRepository>();

@@ -4,10 +4,11 @@ using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using GeoMastery.Persistence.Repositories.v1;
 using SqliteWasmHelper;
+using GeoMastery.BlazorWASM.Repositories.Interfaces;
 
 namespace GeoMastery.BlazorWASM.Repositories.Local;
 
-public class ContinentLocalRepository : IContinentRepository
+public class ContinentLocalRepository : IContinentRepository, IContinentWriteRepository
 {
     private readonly ISqliteWasmDbContextFactory<CountryDbContext> _factory;
     public ContinentLocalRepository(ISqliteWasmDbContextFactory<CountryDbContext> factory)
@@ -33,4 +34,11 @@ public class ContinentLocalRepository : IContinentRepository
 
         return continent;
     }
+
+    public async Task AddRangeAsync(params Continent[] continents)
+    {
+        using var ctx = await _factory.CreateDbContextAsync();
+        await ctx.Continents.AddRangeAsync(continents);
+    }
+
 }

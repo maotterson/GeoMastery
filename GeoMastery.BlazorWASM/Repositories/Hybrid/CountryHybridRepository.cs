@@ -3,42 +3,41 @@ using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using GeoMastery.Persistence.Repositories.v1;
 using SqliteWasmHelper;
+using GeoMastery.BlazorWASM.Repositories.ApiClient;
 
 namespace GeoMastery.BlazorWASM.Repositories.Local;
 
 public class CountryHybridRepository : ICountryRepository
 {
-    private readonly ISqliteWasmDbContextFactory<CountryDbContext> _factory;
-    public CountryHybridRepository(ISqliteWasmDbContextFactory<CountryDbContext> factory)
+    private readonly CountryLocalRepository _localRepository;
+    private readonly CountryApiClient _apiClient;
+    public CountryHybridRepository(CountryLocalRepository local, CountryApiClient apiClient)
     {
-        _factory = factory;
+        _localRepository = local;
+        _apiClient = apiClient;
     }
 
     public async Task<List<Country>> GetCountriesByContinentAsync(string continentSlug)
     {
-        using var ctx = await _factory.CreateDbContextAsync();
-        var countries = await ctx.Countries
-            .Include(c => c.Region)
-            .Include(c => c.Continent)
-            .Include(c => c.Capital)
-            .Where(c => c.Continent.Slug == continentSlug)
-            .OrderBy(c => c.Name)
-            .ToListAsync();
-
+        var countries = await _localRepository.GetCountriesByContinentAsync(continentSlug);
+        if (countries.Any())
+        {
+            return countries;
+        }
+        countries = await _apiClient.GetCountriesByContinentAsync(continentSlug);
+        await _localRepository.AddRangeAsync(countries.ToArray());
         return countries;
     }
 
     public async Task<List<Country>> GetCountriesByRegionAsync(string regionSlug)
     {
-        using var ctx = await _factory.CreateDbContextAsync();
-        var countries = await ctx.Countries
-           .Include(c => c.Region)
-           .Include(c => c.Continent)
-           .Include(c => c.Capital)
-           .Where(c => c.Region.Slug == regionSlug)
-           .OrderBy(c => c.Name)
-           .ToListAsync();
-
+        var countries = await _localRepository.GetCountriesByRegionAsync(regionSlug);
+        if (countries.Any())
+        {
+            return countries;
+        }
+        countries = await _apiClient.GetCountriesByRegionAsync(regionSlug);
+        await _localRepository.AddRangeAsync(countries.ToArray());
         return countries;
     }
 }
