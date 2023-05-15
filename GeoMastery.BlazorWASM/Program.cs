@@ -28,5 +28,11 @@ builder.Services.AddSqliteWasmDbContextFactory<CountryDbContext>(
 // Build the host
 var host = builder.Build();
 
+// Get ctx factory
+var factory = host.Services.GetRequiredService<ISqliteWasmDbContextFactory<CountryDbContext>>();
+using var ctx = await factory.CreateDbContextAsync();
+var seeder = new CountryDbSeeder(ctx);
+seeder.SeedCountries("sample-data");
+
 await host.RunAsync();
 
