@@ -1,8 +1,11 @@
 using GeoMastery.BlazorWASM;
+using GeoMastery.Persistence.Data;
 using GeoMastery.Persistence.Repositories.v1;
 using GeoMastery.Persistence.Services.v1;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.EntityFrameworkCore;
+using SqliteWasmHelper;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,6 +20,10 @@ builder.Services.AddScoped<IContinentService, ContinentService>();
 builder.Services.AddScoped<IContinentRepository, ContinentRepository>();
 builder.Services.AddScoped<IRegionService, RegionService>();
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
+// Add context factory
+builder.Services.AddSqliteWasmDbContextFactory<CountryDbContext>(
+    opts => opts.UseSqlite("Data Source=countries.sqlite3"));
 
 // Build the host
 var host = builder.Build();

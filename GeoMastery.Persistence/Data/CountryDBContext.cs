@@ -10,6 +10,11 @@ public class CountryDbContext : DbContext
     public DbSet<Continent> Continents { get; set; }
     public DbSet<Region> Regions { get; set; }
 
+    public CountryDbContext(DbContextOptions<CountryDbContext> opts) : base(opts)
+    {
+
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite("Data Source=countries.db"); 
