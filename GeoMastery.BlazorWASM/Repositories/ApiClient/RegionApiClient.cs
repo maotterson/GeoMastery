@@ -5,6 +5,11 @@ namespace GeoMastery.BlazorWASM.Repositories.ApiClient;
 
 public class RegionApiClient : IRegionRepository
 {
+    private readonly HttpClient _httpClient;
+    public RegionApiClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
     public Task<List<Region>> GetAllRegionsAsync()
     {
         throw new NotImplementedException();

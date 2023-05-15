@@ -5,6 +5,11 @@ namespace GeoMastery.BlazorWASM.Repositories.ApiClient;
 
 public class CountryApiClient : ICountryRepository
 {
+    private readonly HttpClient _httpClient;
+    public CountryApiClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
     public Task<List<Country>> GetCountriesByContinentAsync(string continentSlug)
     {
         throw new NotImplementedException();
