@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SqliteWasmHelper;
+using System.Collections.Specialized;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -22,7 +23,7 @@ builder.Services.AddScoped<IContinentService, ContinentService>();
 builder.Services.AddScoped<IRegionService, RegionService>();
 
 // Register local repository implementations
-builder.Services.UseLocalRepositories();
+var useHybrid = builder.Services.RegisterRepositories(hybrid: false);
 
 // Register caching services (todo: deprecate, replace with a remote repository)
 builder.Services.AddScoped<CountriesCachingService>();
@@ -33,6 +34,12 @@ builder.Services.AddSqliteWasmDbContextFactory<CountryDbContext>(
 
 // Build the host
 var host = builder.Build();
+
+// Decide whether to seed data locally or from api
+if (!useHybrid)
+{
+    await host.SeedDataLocally(); // takes a while on the client end
+}
 
 // Get ctx factory
 var factory = host.Services.GetRequiredService<ISqliteWasmDbContextFactory<CountryDbContext>>();
