@@ -3,11 +3,12 @@
 @using GeoMastery.BlazorWASM.Extensions
 @using GeoMastery.BlazorWASM.Shared.ContinentCard
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
+@using GeoMastery.CountriesAPI.Contracts.Extensions.v1
+@using GeoMastery.Persistence.Services.v1
 @using Microsoft.Extensions.Options
 @using Microsoft.Extensions.Configuration
 
-@inject IConfiguration Configuration
-@inject HttpClient Http
+@inject IContinentService ContinentService
 
 <h3>Continents</h3>
 
@@ -25,19 +26,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            var baseUrl = Configuration["CountriesApi:BaseUrl"];
-            var continentUri = $"{baseUrl}Continent";
-            continents = await Http.GetFromJsonAsync<List<ContinentDto>>(continentUri) ?? throw new NullReferenceException();
-        }
-        catch (HttpRequestException ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+        var continentEntities = await ContinentService.GetAllContinentsAsync();
+        continents = continentEntities.ToDto();
     }
 }

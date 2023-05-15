@@ -1,13 +1,14 @@
 ﻿@page "/regions"
 
 @using GeoMastery.BlazorWASM.Extensions
+@using GeoMastery.CountriesAPI.Contracts.Extensions.v1;
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @using GeoMastery.BlazorWASM.Shared.RegionCard
+@using GeoMastery.Persistence.Services.v1
 @using Microsoft.Extensions.Options
 @using Microsoft.Extensions.Configuration
 
-@inject IConfiguration Configuration
-@inject HttpClient Http
+@inject IRegionService RegionService
 
 <h3>Regions</h3>
 
@@ -25,19 +26,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            var baseUrl = Configuration["CountriesApi:BaseUrl"];
-            var regionUri = $"{baseUrl}Region";
-            regions = await Http.GetFromJsonAsync<List<RegionDto>>(regionUri) ?? throw new NullReferenceException();
-        }
-        catch (HttpRequestException ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+        var regionEntities = await RegionService.GetAllRegionsAsync();
+        regions = regionEntities.ToDto();
     }
 }

@@ -7,6 +7,10 @@ public static class StringUtilities
         {
             return "not-available";
         }
+        if (name.Contains('/'))
+        {
+            name.Replace('/', '_');
+        }
         var slug = name.ToLower().Replace(" ", "-");
         return slug;
     }

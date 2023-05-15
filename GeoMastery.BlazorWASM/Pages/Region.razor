@@ -5,12 +5,13 @@
 @using GeoMastery.BlazorWASM.Shared.BackButton
 @using GeoMastery.BlazorWASM.Shared.CountrySummaryCard
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
+@using GeoMastery.CountriesAPI.Contracts.Extensions.v1
+@using GeoMastery.Persistence.Services.v1
 @using Microsoft.Extensions.Options
 @using Microsoft.Extensions.Configuration
 
-@inject IConfiguration Configuration
-@inject CountriesCachingService CountriesService
-@inject HttpClient Http
+@inject IRegionService RegionService
+@inject ICountryService CountryService
 
 <h3>@_regionDto.Name</h3>
 <BackButton/>
@@ -32,20 +33,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            _regionDto = await CountriesService.GetRegionBySlugAsync(Slug);
-            var baseUrl = Configuration["CountriesApi:BaseUrl"];
-            var countriesUri = $"{baseUrl}Country/by-region/{Slug}";
-            countries = await Http.GetFromJsonAsync<List<CountryDto>>(countriesUri) ?? throw new NullReferenceException();
-        }
-        catch (HttpRequestException ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+        var region = await RegionService.GetRegionBySlugAsync(Slug);
+        _regionDto = region.ToDto();
+
+        var countryEntities = await CountryService.GetCountriesByRegionAsync(Slug);
+        countries = countryEntities.ToDto();
     }
 }
