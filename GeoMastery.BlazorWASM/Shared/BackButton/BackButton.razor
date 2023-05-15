@@ -1,13 +1,10 @@
-﻿@using GeoMastery.BlazorWASM.State
-@inject PageHistoryState pageHistoryState
-@inject NavigationManager navigationManager
+﻿@inject IJSRuntime JSRuntime
 
-<button @onclick="GoBack">Go Back</button>
+<button @onclick="GoBack">Back</button>
 
 @code {
-    private void GoBack()
-    {
-        string uri = pageHistoryState.GetGoBackPage();
-        navigationManager.NavigateTo(uri);
-    }
+    private async Task GoBack()
+{
+    await JSRuntime.InvokeVoidAsync("history.back");
+}
 }
