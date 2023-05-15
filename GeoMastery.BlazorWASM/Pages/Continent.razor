@@ -3,13 +3,15 @@
 @using GeoMastery.BlazorWASM.Extensions
 @using GeoMastery.BlazorWASM.Shared.CountrySummaryCard
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
+@using GeoMastery.CountriesAPI.Contracts.Extensions.v1
+@using GeoMastery.Persistence.Services.v1
 @using Microsoft.Extensions.Options
 @using Microsoft.Extensions.Configuration
 
-@inject IConfiguration Configuration
-@inject HttpClient Http
+@inject IContinentService ContinentService
+@inject ICountryService CountryService
 
-<h3>@Slug</h3>
+<h3>@_continentDto.Name</h3>
 <div class="row">
 @foreach(var country in countries)
 {
@@ -22,25 +24,15 @@
 @code {
     [Parameter, EditorRequired]
     public string Slug { get; set; } = default!;
-    public ContinentDto ContinentDto { get; set; } = default!; // todo: must implement get region by slug method
+    private ContinentDto _continentDto = default!;
     public List<CountryDto> countries { get; set; } = new List<CountryDto>();
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            var continentSlug = Slug;
-            var baseUrl = Configuration["CountriesApi:BaseUrl"];
-            var countriesUri = $"{baseUrl}Country/by-continent/{continentSlug}";
-            countries = await Http.GetFromJsonAsync<List<CountryDto>>(countriesUri) ?? throw new NullReferenceException();
-        }
-        catch (HttpRequestException ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+        var continent = await ContinentService.GetContinentBySlugAsync(Slug);
+        _continentDto = continent.ToDto();
+
+        var countryEntities = await CountryService.GetCountriesByContinentAsync(Slug);
+        countries = countryEntities.ToDto();
     }
 }
