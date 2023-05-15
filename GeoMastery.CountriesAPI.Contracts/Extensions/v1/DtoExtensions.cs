@@ -1,7 +1,7 @@
 ﻿using GeoMastery.CountriesAPI.Contracts.Dto.v1;
 using GeoMastery.Domain.Models;
 
-namespace GeoMastery.CountriesAPI.Extensions.v1;
+namespace GeoMastery.CountriesAPI.Contracts.Extensions.v1;
 
 public static class DtoExtensions
 {

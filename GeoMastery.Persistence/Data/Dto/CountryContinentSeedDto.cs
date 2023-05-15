@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace GeoMastery.BlazorWASM.Data.Dto;
+namespace GeoMastery.Persistence.Data.Dto;
 
 public class CountryContinentSeedDto
 {

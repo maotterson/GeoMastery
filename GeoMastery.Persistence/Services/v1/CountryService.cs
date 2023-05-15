@@ -1,8 +1,8 @@
-﻿using GeoMastery.CountriesAPI.Exceptions;
-using GeoMastery.CountriesAPI.Repositories.v1;
+﻿using GeoMastery.Persistence.Exceptions;
+using GeoMastery.Persistence.Repositories.v1;
 using GeoMastery.Domain.Models;
 
-namespace GeoMastery.CountriesAPI.Services.v1;
+namespace GeoMastery.Persistence.Services.v1;
 
 public class CountryService : ICountryService
 {

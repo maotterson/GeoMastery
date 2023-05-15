@@ -1,6 +1,6 @@
 ﻿using GeoMastery.Domain.Models;
 
-namespace GeoMastery.CountriesAPI.Services.v1;
+namespace GeoMastery.Persistence.Services.v1;
 
 public interface IContinentService
 {

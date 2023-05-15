@@ -1,7 +1,7 @@
 ﻿using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GeoMastery.BlazorWASM.Data;
+namespace GeoMastery.Persistence.Data;
 
 public class CountryDbContext : DbContext
 {

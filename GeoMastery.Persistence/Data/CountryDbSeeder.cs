@@ -1,9 +1,9 @@
-﻿using GeoMastery.BlazorWASM.Data.Dto;
+﻿using GeoMastery.Persistence.Data.Dto;
 using GeoMastery.Domain.Models;
 using GeoMastery.Domain.Utilities;
 using System.Text.Json;
 
-namespace GeoMastery.BlazorWASM.Data;
+namespace GeoMastery.Persistence.Data;
 
 public class CountryDbSeeder
 {

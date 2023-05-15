@@ -1,7 +1,7 @@
-using GeoMastery.BlazorWASM.Data;
+using GeoMastery.Persistence.Data;
 using GeoMastery.CountriesAPI.Middleware;
-using GeoMastery.CountriesAPI.Repositories.v1;
-using GeoMastery.CountriesAPI.Services.v1;
+using GeoMastery.Persistence.Repositories.v1;
+using GeoMastery.Persistence.Services.v1;
 using GeoMastery.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

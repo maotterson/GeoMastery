@@ -1,6 +1,6 @@
 ﻿using GeoMastery.Domain.Models;
 
-namespace GeoMastery.CountriesAPI.Repositories.v1;
+namespace GeoMastery.Persistence.Repositories.v1;
 
 public interface IContinentRepository
 {

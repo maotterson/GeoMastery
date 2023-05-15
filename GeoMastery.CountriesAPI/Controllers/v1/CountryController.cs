@@ -1,10 +1,8 @@
-﻿using GeoMastery.BlazorWASM.Data;
+﻿using GeoMastery.Persistence.Data;
 using GeoMastery.CountriesAPI.Contracts.Dto.v1;
-using GeoMastery.CountriesAPI.Extensions.v1;
-using GeoMastery.CountriesAPI.Services.v1;
-using GeoMastery.Domain.Models;
+using GeoMastery.CountriesAPI.Contracts.Extensions.v1;
+using GeoMastery.Persistence.Services.v1;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GeoMastery.CountriesAPI.Controllers.v1;
 [ApiVersion("1.0")]

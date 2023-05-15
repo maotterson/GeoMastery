@@ -1,8 +1,8 @@
-﻿using GeoMastery.BlazorWASM.Data;
+﻿using GeoMastery.Persistence.Data;
 using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GeoMastery.CountriesAPI.Repositories.v1;
+namespace GeoMastery.Persistence.Repositories.v1;
 
 public class CountryRepository : ICountryRepository
 {

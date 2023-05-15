@@ -1,8 +1,8 @@
 ﻿using GeoMastery.Domain.Models;
 
-namespace GeoMastery.CountriesAPI.Services.v1;
+namespace GeoMastery.Persistence.Repositories.v1;
 
-public interface ICountryService
+public interface ICountryRepository
 {
     Task<List<Country>> GetCountriesByRegionAsync(string regionSlug);
     Task<List<Country>> GetCountriesByContinentAsync(string continentSlug);

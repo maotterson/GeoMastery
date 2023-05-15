@@ -1,6 +1,6 @@
 ﻿namespace GeoMastery.CountriesAPI.Middleware;
 
-using GeoMastery.CountriesAPI.Exceptions;
+using GeoMastery.Persistence.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Net;
