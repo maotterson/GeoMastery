@@ -1,4 +1,6 @@
 using GeoMastery.BlazorWASM;
+using GeoMastery.BlazorWASM.Extensions;
+using GeoMastery.BlazorWASM.Repositories;
 using GeoMastery.BlazorWASM.Services;
 using GeoMastery.Persistence.Data;
 using GeoMastery.Persistence.Repositories.v1;
@@ -14,13 +16,13 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-// Register persistence/application layers
+// Register service layer
 builder.Services.AddScoped<ICountryService, CountryService>();
-builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IContinentService, ContinentService>();
-builder.Services.AddScoped<IContinentRepository, ContinentRepository>();
 builder.Services.AddScoped<IRegionService, RegionService>();
-builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
+// Register local repository implementations
+builder.Services.UseLocalRepositories();
 
 // Register caching services (todo: deprecate, replace with a remote repository)
 builder.Services.AddScoped<CountriesCachingService>();
