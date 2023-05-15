@@ -1,0 +1,10 @@
+﻿@inject IJSRuntime JSRuntime
+
+<button @onclick="GoBack">Back</button>
+
+@code {
+    private async Task GoBack()
+{
+    await JSRuntime.InvokeVoidAsync("history.back");
+}
+}

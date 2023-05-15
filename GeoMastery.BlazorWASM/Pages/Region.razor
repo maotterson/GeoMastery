@@ -1,15 +1,19 @@
 ﻿@page "/regions/{Slug}"
 
 @using GeoMastery.BlazorWASM.Extensions
+@using GeoMastery.BlazorWASM.Services
+@using GeoMastery.BlazorWASM.Shared.BackButton
 @using GeoMastery.BlazorWASM.Shared.CountrySummaryCard
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @using Microsoft.Extensions.Options
 @using Microsoft.Extensions.Configuration
 
 @inject IConfiguration Configuration
+@inject ICountriesService CountriesService
 @inject HttpClient Http
 
-<h3>@Slug</h3>
+<h3>@_regionDto.Name</h3>
+<BackButton/>
 <div class="row">
 @foreach(var country in countries)
 {
@@ -22,17 +26,19 @@
 @code {
     [Parameter, EditorRequired]
     public string Slug { get; set; } = default!;
-    public RegionDto RegionDto { get; set; } = default!; // todo: must implement get region by slug method
+
+    private RegionDto _regionDto = default!;
     public List<CountryDto> countries { get; set; } = new List<CountryDto>();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var regionSlug = Slug;
+            _regionDto = await CountriesService.GetRegionBySlugAsync(Slug);
             var baseUrl = Configuration["CountriesApi:BaseUrl"];
-            var countriesUri = $"{baseUrl}Country/by-region/{regionSlug}";
-            countries = await Http.GetFromJsonAsync<List<CountryDto>>(countriesUri) ?? throw new NullReferenceException();
+            var countriesUri = $"{baseUrl}Country/by-region/{Slug}";
+            countries = await Http.GetFromJsonAsync
+    <List<CountryDto>>(countriesUri) ?? throw new NullReferenceException();
         }
         catch (HttpRequestException ex)
         {
