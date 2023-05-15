@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using GeoMastery.Persistence.Repositories.v1;
 using SqliteWasmHelper;
 
-namespace GeoMastery.BlazorWASM.Repositories;
+namespace GeoMastery.BlazorWASM.Repositories.Local;
 
 public class RegionLocalRepository : IRegionRepository
 {
