@@ -2,13 +2,15 @@
 using GeoMastery.Domain.Models;
 using GeoMastery.Domain.Utilities;
 using System.Text.Json;
+using GeoMastery.Persistence.Data;
 
-namespace GeoMastery.Persistence.Data;
+namespace GeoMastery.BlazorWASM.Services;
 
-public class CountryDbSeeder
+public class HttpCountryDbSeeder
 {
+    private readonly HttpClient _http;
     private readonly CountryDbContext _context;
-    public void SeedCountries(string directory)
+    public async Task SeedCountries(string url)
     {
         try
         {
@@ -18,12 +20,12 @@ public class CountryDbSeeder
                 return;
             }
 
-            SeedCountryAbbreviation(directory);
-            SeedCountryCapitalsWithoutCities(directory);
-            SeedCountryContinents(directory);
-            SeedCountryFlags(directory);
-            SeedCountryPopulations(directory);
-            SeedCountryRegions(directory);
+            await SeedCountryAbbreviation(url);
+            await SeedCountryCapitalsWithoutCities(url);
+            await SeedCountryContinents(url);
+            await SeedCountryFlags(url);
+            await SeedCountryPopulations(url);
+            await SeedCountryRegions(url);
             SeedMissingData();
 
             _context.SaveChanges();
@@ -35,14 +37,15 @@ public class CountryDbSeeder
         
     }
 
-    public CountryDbSeeder(CountryDbContext context)
+    public HttpCountryDbSeeder(CountryDbContext context, HttpClient http)
     {
         _context = context;
+        _http = http;
     }
 
-    private void SeedCountryAbbreviation(string directory)
+    private async Task SeedCountryAbbreviation(string url)
     {
-        var countries = LoadJsonData<List<CountryAbbreviationSeedDto>>(directory + "/abbreviations.json");
+        var countries = await LoadJsonData<List<CountryAbbreviationSeedDto>>(url + "/abbreviations.json");
         foreach (var country in countries)
         {
             _context.Countries.Add(new Country 
@@ -54,9 +57,9 @@ public class CountryDbSeeder
         }
     }
 
-    private void SeedCountryCapitalsWithoutCities(string directory)
+    private async Task SeedCountryCapitalsWithoutCities(string url)
     {
-        var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
+        var countries = await LoadJsonData<List<CountryCapitalSeedDto>>(url + "/capitals.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
@@ -78,9 +81,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryContinents(string directory)
+    private async Task SeedCountryContinents(string url)
     {
-        var countries = LoadJsonData<List<CountryContinentSeedDto>>(directory + "/continents.json");
+        var countries = await LoadJsonData<List<CountryContinentSeedDto>>(url + "/continents.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
@@ -106,9 +109,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryFlags(string directory)
+    private async Task SeedCountryFlags(string url)
     {
-        var countries = LoadJsonData<List<CountryFlagSeedDto>>(directory + "/flags.json");
+        var countries = await LoadJsonData<List<CountryFlagSeedDto>>(url + "/flags.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
@@ -118,9 +121,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryPopulations(string directory)
+    private async Task SeedCountryPopulations(string url)
     {
-        var countries = LoadJsonData<List<CountryPopulationSeedDto>>(directory + "/populations.json");
+        var countries = await LoadJsonData<List<CountryPopulationSeedDto>>(url + "/populations.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
@@ -130,9 +133,9 @@ public class CountryDbSeeder
             }
         }
     }
-    private void SeedCountryRegions(string directory)
+    private async Task SeedCountryRegions(string url)
     {
-        var countries = LoadJsonData<List<CountryRegionSeedDto>>(directory + "/regions.json");
+        var countries = await LoadJsonData<List<CountryRegionSeedDto>>(url + "/regions.json");
         foreach (var country in countries)
         {
             var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
@@ -205,41 +208,9 @@ public class CountryDbSeeder
         throw new ArgumentException("Missing type must be of type Continent or Region", nameof(missingType));
     }
 
-    private static T LoadJsonData<T>(string fileName)
+    private async Task<T> LoadJsonData<T>(string url)
     {
-        using (var file = File.OpenText(fileName))
-        {
-            var json = file.ReadToEnd();
-            return JsonSerializer.Deserialize<T>(json);
-        }
-    }
-
-    // currently deprecated, cities.json data file would need to be pruned because it currently doesn't include data that would be relevant
-    private void SeedCountryCities(string directory)
-    {
-        var countries = LoadJsonData<List<CountryCitiesSeedDto>>(directory + "/cities.json");
-        foreach (var country in countries)
-        {
-            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
-            if (existingCountry != null)
-            {
-                var citiesToAdd = country.Cities.Select(cityName => new City { Id = Guid.NewGuid(), Name = cityName, Country = existingCountry, CountryId = existingCountry.Id }).ToList();
-                _context.Cities.AddRange(citiesToAdd);
-            }
-        }
-    }
-    // currently deprecated, cities.json data file would need to be pruned because it currently doesn't include data that would be relevant
-    private void SeedCountryCapitalsWithCities(string directory)
-    {
-        var countries = LoadJsonData<List<CountryCapitalSeedDto>>(directory + "/capitals.json");
-        foreach (var country in countries)
-        {
-            var existingCountry = _context.Countries.Local.SingleOrDefault(c => c.Name == country.Country);
-            var existingCity = _context.Cities.Local.SingleOrDefault(c => c.Name == c.Name && c.CountryId == existingCountry.Id); // this should both match name of city AND be the correct country
-            if (existingCountry != null && existingCity != null) // todo: should eventually replace existingCity null check with creation of new entity
-            {
-                existingCountry.CapitalId = existingCity.Id;
-            }
-        }
+        var json = await _http.GetStringAsync(url);
+        return JsonSerializer.Deserialize<T>(json)!;
     }
 }

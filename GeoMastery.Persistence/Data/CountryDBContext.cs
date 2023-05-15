@@ -1,7 +1,7 @@
 ﻿using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GeoMastery.BlazorWASM.Data;
+namespace GeoMastery.Persistence.Data;
 
 public class CountryDbContext : DbContext
 {
@@ -9,6 +9,11 @@ public class CountryDbContext : DbContext
     public DbSet<City> Cities { get; set; }
     public DbSet<Continent> Continents { get; set; }
     public DbSet<Region> Regions { get; set; }
+
+    public CountryDbContext(DbContextOptions<CountryDbContext> opts) : base(opts)
+    {
+
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

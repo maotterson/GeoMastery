@@ -1,20 +1,23 @@
-﻿using GeoMastery.BlazorWASM.Data;
+﻿using GeoMastery.Persistence.Data;
 using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using GeoMastery.Persistence.Repositories.v1;
+using SqliteWasmHelper;
 
-namespace GeoMastery.CountriesAPI.Repositories.v1;
+namespace GeoMastery.BlazorWASM.Repositories.Local;
 
-public class CountryRepository : ICountryRepository
+public class CountryLocalRepository : ICountryRepository
 {
-    private readonly CountryDbContext _context;
-    public CountryRepository(CountryDbContext dbContext)
+    private readonly ISqliteWasmDbContextFactory<CountryDbContext> _factory;
+    public CountryLocalRepository(ISqliteWasmDbContextFactory<CountryDbContext> factory)
     {
-        _context = dbContext;
+        _factory = factory;
     }
 
     public async Task<List<Country>> GetCountriesByContinentAsync(string continentSlug)
     {
-        var countries = await _context.Countries
+        using var ctx = await _factory.CreateDbContextAsync();
+        var countries = await ctx.Countries
             .Include(c => c.Region)
             .Include(c => c.Continent)
             .Include(c => c.Capital)
@@ -27,7 +30,8 @@ public class CountryRepository : ICountryRepository
 
     public async Task<List<Country>> GetCountriesByRegionAsync(string regionSlug)
     {
-        var countries = await _context.Countries
+        using var ctx = await _factory.CreateDbContextAsync();
+        var countries = await ctx.Countries
            .Include(c => c.Region)
            .Include(c => c.Continent)
            .Include(c => c.Capital)

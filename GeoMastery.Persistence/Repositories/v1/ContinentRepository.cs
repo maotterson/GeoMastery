@@ -1,9 +1,9 @@
-﻿using GeoMastery.BlazorWASM.Data;
-using GeoMastery.CountriesAPI.Exceptions;
+﻿using GeoMastery.Persistence.Data;
+using GeoMastery.Persistence.Exceptions;
 using GeoMastery.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GeoMastery.CountriesAPI.Repositories.v1;
+namespace GeoMastery.Persistence.Repositories.v1;
 
 public class ContinentRepository : IContinentRepository
 {

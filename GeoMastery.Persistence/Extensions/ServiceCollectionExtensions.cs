@@ -1,4 +1,4 @@
-﻿using GeoMastery.BlazorWASM.Data;
+﻿using GeoMastery.Persistence.Data;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GeoMastery.Persistence.Extensions;

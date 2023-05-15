@@ -3,11 +3,11 @@ using System.Net.Http.Json;
 
 namespace GeoMastery.BlazorWASM.Services;
 
-public class CountriesService : ICountriesService
+public class CountriesCachingService
 {
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
-    public CountriesService(HttpClient httpClient, IConfiguration configuration)
+    public CountriesCachingService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
         _configuration = configuration;

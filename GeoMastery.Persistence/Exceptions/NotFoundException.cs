@@ -1,4 +1,4 @@
-﻿namespace GeoMastery.CountriesAPI.Exceptions;
+﻿namespace GeoMastery.Persistence.Exceptions;
 
 public class NotFoundException : Exception
 {
