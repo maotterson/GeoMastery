@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GeoMastery.CountriesAPI.Contracts\GeoMastery.CountriesAPI.Contracts.csproj" />
     <ProjectReference Include="..\GeoMastery.Domain\GeoMastery.Domain.csproj" />
+    <ProjectReference Include="..\GeoMastery.Persistence\GeoMastery.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
