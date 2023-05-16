@@ -39,6 +39,7 @@ public class ContinentLocalRepository : IContinentRepository, IContinentWriteRep
     {
         using var ctx = await _factory.CreateDbContextAsync();
         await ctx.Continents.AddRangeAsync(continents);
+        await ctx.SaveChangesAsync();
     }
 
 }
