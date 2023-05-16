@@ -21,12 +21,10 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IContinentService, ContinentService>();
 builder.Services.AddScoped<IRegionService, RegionService>();
+builder.Services.AddScoped<SqliteDbService>();
 
 // Register local repository implementations
-var useHybrid = builder.Services.RegisterRepositories(hybrid: false);
-
-// Register caching services (todo: deprecate, replace with a remote repository)
-builder.Services.AddScoped<CountriesCachingService>();
+var useHybrid = builder.Services.RegisterRepositories(hybrid: true);
 
 // Add context factory
 builder.Services.AddSqliteWasmDbContextFactory<CountryDbContext>(
@@ -40,13 +38,11 @@ if (!useHybrid)
 {
     await host.SeedDataLocally(); // takes a while on the client end
 }
-
-// Get ctx factory
-var factory = host.Services.GetRequiredService<ISqliteWasmDbContextFactory<CountryDbContext>>();
-var httpClient = host.Services.GetRequiredService<HttpClient>();
-using var ctx = await factory.CreateDbContextAsync();
-var seeder = new HttpCountryDbSeeder(ctx, httpClient);
-await seeder.SeedCountries("sample-data");
+else
+{
+    var dbService = host.Services.GetRequiredService<SqliteDbService>();
+    await dbService.GenerateDatabaseSchema();
+}
 
 await host.RunAsync();
 
