@@ -9,4 +9,6 @@ public class RegionDto
 
     [JsonPropertyName("slug")]
     public string Slug { get; set; }
+    [JsonPropertyName("id")]
+    public Guid Id { get; set; } = default!;
 }

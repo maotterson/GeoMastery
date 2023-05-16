@@ -26,4 +26,12 @@ public class CountryDto
 
     [JsonPropertyName("flag_base_64")]
     public string? FlagBase64 { get; set; }
+    [JsonPropertyName("id")]
+    public Guid Id { get; set; } = default!;
+    [JsonPropertyName("region_id")]
+    public Guid RegionId { get; set; } = default!;
+    [JsonPropertyName("continent_id")]
+    public Guid ContinentId { get; set; } = default!;
+    [JsonPropertyName("capital_id")]
+    public Guid? CapitalId { get; set; }
 }
