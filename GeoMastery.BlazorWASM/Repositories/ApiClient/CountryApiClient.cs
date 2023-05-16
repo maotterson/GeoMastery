@@ -19,7 +19,7 @@ public class CountryApiClient : ICountryRepository
     public async Task<List<Country>> GetCountriesByContinentAsync(string continentSlug)
     {
         var baseUrl = _configuration["CountriesApi:BaseUrl"];
-        var requestUrl = baseUrl + "/countries/by-continent";
+        var requestUrl = baseUrl + "country/by-continent";
 
         var countries = await _httpClient.GetFromJsonAsync<List<CountryDto>>(requestUrl);
 
@@ -31,7 +31,7 @@ public class CountryApiClient : ICountryRepository
     public async Task<List<Country>> GetCountriesByRegionAsync(string regionSlug)
     {
         var baseUrl = _configuration["CountriesApi:BaseUrl"];
-        var requestUrl = baseUrl + "/countries/by-region";
+        var requestUrl = baseUrl + "country/by-region";
 
         var countries = await _httpClient.GetFromJsonAsync<List<CountryDto>>(requestUrl);
 

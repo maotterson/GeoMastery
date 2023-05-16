@@ -19,7 +19,7 @@ public class RegionApiClient : IRegionRepository
     public async Task<List<Region>> GetAllRegionsAsync()
     {
         var baseUrl = _configuration["CountriesApi:BaseUrl"];
-        var requestUrl = baseUrl + "/regions";
+        var requestUrl = baseUrl + "region";
 
         var regions = await _httpClient.GetFromJsonAsync<List<RegionDto>>(requestUrl);
 
@@ -31,7 +31,7 @@ public class RegionApiClient : IRegionRepository
     public async Task<Region> GetRegionBySlugAsync(string slug)
     {
         var baseUrl = _configuration["CountriesApi:BaseUrl"];
-        var requestUrl = baseUrl + $"/regions/{slug}";
+        var requestUrl = baseUrl + $"region/{slug}";
 
         var region = await _httpClient.GetFromJsonAsync<RegionDto>(requestUrl);
 
