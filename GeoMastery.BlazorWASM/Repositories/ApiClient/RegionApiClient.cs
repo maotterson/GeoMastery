@@ -1,5 +1,7 @@
-﻿using GeoMastery.CountriesAPI.Contracts.Dto.v1;
+﻿using GeoMastery.BlazorWASM.Extensions;
+using GeoMastery.CountriesAPI.Contracts.Dto.v1;
 using GeoMastery.Domain.Models;
+using GeoMastery.Persistence.Exceptions;
 using GeoMastery.Persistence.Repositories.v1;
 using System.Net.Http.Json;
 
@@ -21,8 +23,9 @@ public class RegionApiClient : IRegionRepository
 
         var regions = await _httpClient.GetFromJsonAsync<List<RegionDto>>(requestUrl);
 
-        // todo: create client side dto -> domain internal mapping mechanism
-        return regions;
+        if (regions is null) throw new NotFoundException($"No regions found.");
+
+        return regions.ToRegions();
     }
 
     public async Task<Region> GetRegionBySlugAsync(string slug)
@@ -32,7 +35,8 @@ public class RegionApiClient : IRegionRepository
 
         var region = await _httpClient.GetFromJsonAsync<RegionDto>(requestUrl);
 
-        // todo: create client side dto -> domain internal mapping mechanism
-        return region;
+        if (region is null) throw new NotFoundException($"No region found with slug ${slug}.");
+
+        return region.ToRegion();
     }
 }

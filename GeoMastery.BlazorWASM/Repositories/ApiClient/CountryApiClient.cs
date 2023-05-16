@@ -1,5 +1,7 @@
-﻿using GeoMastery.CountriesAPI.Contracts.Dto.v1;
+﻿using GeoMastery.BlazorWASM.Extensions;
+using GeoMastery.CountriesAPI.Contracts.Dto.v1;
 using GeoMastery.Domain.Models;
+using GeoMastery.Persistence.Exceptions;
 using GeoMastery.Persistence.Repositories.v1;
 using System.Net.Http.Json;
 
@@ -21,8 +23,9 @@ public class CountryApiClient : ICountryRepository
 
         var countries = await _httpClient.GetFromJsonAsync<List<CountryDto>>(requestUrl);
 
-        // todo: create client side dto -> domain internal mapping mechanism
-        return countries;
+        if (countries is null) throw new NotFoundException($"No countries found for continent ${continentSlug}.");
+
+        return countries.ToCountries();
     }
 
     public async Task<List<Country>> GetCountriesByRegionAsync(string regionSlug)
@@ -32,7 +35,8 @@ public class CountryApiClient : ICountryRepository
 
         var countries = await _httpClient.GetFromJsonAsync<List<CountryDto>>(requestUrl);
 
-        // todo: create client side dto -> domain internal mapping mechanism
-        return countries;
+        if (countries is null) throw new NotFoundException($"No countries found for region ${regionSlug}.");
+
+        return countries.ToCountries();
     }
 }
