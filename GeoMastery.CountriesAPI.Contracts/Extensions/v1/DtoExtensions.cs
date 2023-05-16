@@ -9,14 +9,18 @@ public static class DtoExtensions
     {
         return new CountryDto
         {
+            Id = country.Id,
             Country = country.Name,
             Code = country.Code,
             Slug = country.Slug,
             Capital = country.Capital?.Name,
+            CapitalId = country.CapitalId,
             Continent = country.Continent.Name,
+            ContinentId = country.ContinentId,
             Region = country.Region.Name,
+            RegionId = country.RegionId,
             Population = country.Population,
-            FlagBase64 = country.FlagBase64
+            FlagBase64 = country.FlagBase64,
         };
     }
 
@@ -29,8 +33,9 @@ public static class DtoExtensions
     {
         return new RegionDto
         {
+            Id = region.Id,
             Name = region.Name,
-            Slug = region.Slug
+            Slug = region.Slug,
         };
     }
 
@@ -43,6 +48,7 @@ public static class DtoExtensions
     {
         return new ContinentDto
         {
+            Id = continent.Id,
             Name = continent.Name,
             Slug = continent.Slug
         };

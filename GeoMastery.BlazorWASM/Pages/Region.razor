@@ -37,6 +37,8 @@
         _regionDto = region.ToDto();
 
         var countryEntities = await CountryService.GetCountriesByRegionAsync(Slug);
+        Console.WriteLine(region.Name);
+        foreach (var cty in countryEntities) Console.WriteLine(countryEntities);
         countries = countryEntities.ToDto();
     }
 }

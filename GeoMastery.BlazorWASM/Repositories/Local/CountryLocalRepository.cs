@@ -15,9 +15,11 @@ public class CountryLocalRepository : ICountryRepository, ICountryWriteRepositor
         _factory = factory;
     }
 
-    public Task AddRangeAsync(params Country[] countries)
+    public async Task AddRangeAsync(params Country[] countries)
     {
-        throw new NotImplementedException();
+        using var ctx = await _factory.CreateDbContextAsync();
+        await ctx.Countries.AddRangeAsync(countries);
+        await ctx.SaveChangesAsync();
     }
 
     public async Task<List<Country>> GetCountriesByContinentAsync(string continentSlug)

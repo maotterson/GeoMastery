@@ -20,6 +20,7 @@ public class RegionLocalRepository : IRegionRepository, IRegionWriteRepository
     {
         using var ctx = await _factory.CreateDbContextAsync();
         await ctx.Regions.AddRangeAsync(regions);
+        await ctx.SaveChangesAsync();
     }
 
     public async Task<List<Region>> GetAllRegionsAsync()
