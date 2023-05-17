@@ -7,7 +7,7 @@ public static class DtoExtensions
 {
     public static Country ToCountry(this CountryDto countryDto)
     {
-        return new Country
+        var country = new Country
         {
             Id = countryDto.Id,
             Name = countryDto.Country,
@@ -16,10 +16,17 @@ public static class DtoExtensions
             FlagBase64 = countryDto.FlagBase64,
             Population = countryDto.Population,
             CapitalId = countryDto.CapitalId,
-            // todo: add step to persist capital entities via Capital = countryDto.Capital
             ContinentId = countryDto.ContinentId,
             RegionId = countryDto.RegionId,
         };
+        country.Capital = countryDto.CapitalId is not null ? new City
+        {
+            Id = (Guid)countryDto.CapitalId,
+            CountryId = countryDto.Id,
+            Name = countryDto.Capital!
+        } : null;
+
+        return country;
     }
     public static List<Country> ToCountries(this List<CountryDto> countryDtos)
     {
@@ -51,4 +58,6 @@ public static class DtoExtensions
     {
         return regionDtos.Select(r => r.ToRegion()).ToList();
     }
+
+    
 }

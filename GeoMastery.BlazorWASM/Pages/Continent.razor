@@ -1,6 +1,7 @@
 ﻿@page "/continents/{Slug}"
 
 @using GeoMastery.BlazorWASM.Extensions
+@using GeoMastery.BlazorWASM.Shared.BackButton
 @using GeoMastery.BlazorWASM.Shared.CountrySummaryCard
 @using GeoMastery.CountriesAPI.Contracts.Dto.v1
 @using GeoMastery.CountriesAPI.Contracts.Extensions.v1
@@ -12,6 +13,7 @@
 @inject ICountryService CountryService
 
 <h3>@_continentDto.Name</h3>
+<BackButton/>
 <div class="row">
 @foreach(var country in countries)
 {

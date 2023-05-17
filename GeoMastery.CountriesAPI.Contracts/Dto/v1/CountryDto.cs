@@ -11,7 +11,7 @@ public class CountryDto
     public string Code { get; set; }
 
     [JsonPropertyName("continent")]
-    public string Continent { get; set; }
+    public string? Continent { get; set; }
 
     [JsonPropertyName("capital")]
     public string? Capital { get; set; }
@@ -19,7 +19,7 @@ public class CountryDto
     public string Slug { get; set; }
 
     [JsonPropertyName("region")]
-    public string Region { get; set; }
+    public string? Region { get; set; }
 
     [JsonPropertyName("population")]
     public int Population { get; set; }
