@@ -34,6 +34,7 @@ public static class DependencyInjection
         services.AddScoped<CountryLocalRepository>();
         services.AddScoped<ContinentLocalRepository>();
         services.AddScoped<RegionLocalRepository>();
+        services.AddScoped<CapitalLocalRepository>();
         services.AddScoped<CountryApiClient>();
         services.AddScoped<ContinentApiClient>();
         services.AddScoped<RegionApiClient>();

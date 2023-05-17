@@ -10,11 +10,13 @@ namespace GeoMastery.BlazorWASM.Repositories.Local;
 public class CountryHybridRepository : ICountryRepository
 {
     private readonly CountryLocalRepository _localRepository;
+    private readonly CapitalLocalRepository _capitallocalRepository;
     private readonly CountryApiClient _apiClient;
-    public CountryHybridRepository(CountryLocalRepository local, CountryApiClient apiClient)
+    public CountryHybridRepository(CountryLocalRepository local, CountryApiClient apiClient, CapitalLocalRepository capitallocalRepository)
     {
         _localRepository = local;
         _apiClient = apiClient;
+        _capitallocalRepository = capitallocalRepository;
     }
 
     public async Task<List<Country>> GetCountriesByContinentAsync(string continentSlug)
