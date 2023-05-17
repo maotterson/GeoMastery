@@ -12,6 +12,19 @@ public class CapitalLocalRepository
         _factory = factory;
     }
 
+    public async Task AddFromCountriesAsync(params Country[] countries)
+    {
+        using var ctx = await _factory.CreateDbContextAsync();
+        foreach(var c in countries)
+        {
+            if (c.Capital is not null)
+            {
+                await ctx.Cities.AddAsync(c.Capital);
+            }
+        }
+        await ctx.SaveChangesAsync();
+    }
+
     public async Task AddAsync(City capital)
     {
         using var ctx = await _factory.CreateDbContextAsync();
