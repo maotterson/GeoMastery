@@ -5,7 +5,7 @@ namespace GeoMastery.Persistence.Data.Dto;
 public class CountryAbbreviationSeedDto
 {
     [JsonPropertyName("abbreviation")]
-    public string Abbreviation { get; set; }
+    public string Abbreviation { get; set; } = default!;
     [JsonPropertyName("country")]
-    public string Country { get; set; }
+    public string Country { get; set; } = default!;
 }

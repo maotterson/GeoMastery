@@ -5,7 +5,7 @@ namespace GeoMastery.Persistence.Data.Dto;
 public class CountryFlagSeedDto
 {
     [JsonPropertyName("country")]
-    public string Country { get; set; }
+    public string Country { get; set; } = default!;
 
     [JsonPropertyName("flag_base64")]
     public string FlagBase64 { get; set; }

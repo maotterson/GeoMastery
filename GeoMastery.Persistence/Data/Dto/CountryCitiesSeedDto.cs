@@ -5,7 +5,7 @@ namespace GeoMastery.Persistence.Data.Dto;
 public class CountryCitiesSeedDto
 {
     [JsonPropertyName("country")]
-    public string Country { get; set; }
+    public string Country { get; set; } = default!;
     [JsonPropertyName("cities")]
-    public List<string> Cities { get; set; }
+    public List<string> Cities { get; set; } = default!;
 }
