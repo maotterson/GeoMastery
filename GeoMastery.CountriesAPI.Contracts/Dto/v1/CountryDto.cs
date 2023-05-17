@@ -5,10 +5,10 @@ namespace GeoMastery.CountriesAPI.Contracts.Dto.v1;
 public class CountryDto
 {
     [JsonPropertyName("name")]
-    public string Country { get; set; }
+    public string Country { get; set; } = default!;
 
     [JsonPropertyName("code")]
-    public string Code { get; set; }
+    public string Code { get; set; } = default!;
 
     [JsonPropertyName("continent")]
     public string? Continent { get; set; }
@@ -16,7 +16,7 @@ public class CountryDto
     [JsonPropertyName("capital")]
     public string? Capital { get; set; }
     [JsonPropertyName("slug")]
-    public string Slug { get; set; }
+    public string Slug { get; set; } = default!;
 
     [JsonPropertyName("region")]
     public string? Region { get; set; }
