@@ -19,6 +19,8 @@ public class CapitalLocalRepository
         {
             if (c.Capital is not null)
             {
+                Console.WriteLine(c.Name);
+                Console.WriteLine(c.Capital.Name);
                 await ctx.Cities.AddAsync(c.Capital);
             }
         }

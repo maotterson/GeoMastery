@@ -16,8 +16,6 @@ public static class DtoExtensions
             FlagBase64 = countryDto.FlagBase64,
             Population = countryDto.Population,
             CapitalId = countryDto.CapitalId,
-            
-            // todo: add step to persist capital entities via Capital = countryDto.Capital
             ContinentId = countryDto.ContinentId,
             RegionId = countryDto.RegionId,
         };
@@ -25,7 +23,7 @@ public static class DtoExtensions
         {
             Id = (Guid)countryDto.CapitalId,
             CountryId = countryDto.Id,
-            Name = countryDto.Country
+            Name = countryDto.Capital!
         } : null;
 
         return country;
