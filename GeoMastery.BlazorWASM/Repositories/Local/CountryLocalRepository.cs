@@ -18,6 +18,13 @@ public class CountryLocalRepository : ICountryRepository, ICountryWriteRepositor
     public async Task AddRangeAsync(params Country[] countries)
     {
         using var ctx = await _factory.CreateDbContextAsync();
+        foreach (var c in countries)
+        {
+            if (c.Capital is not null)
+            {
+                await ctx.Cities.AddAsync(c.Capital);
+            }
+        };
         await ctx.Countries.AddRangeAsync(countries);
         await ctx.SaveChangesAsync();
     }

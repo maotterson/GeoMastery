@@ -27,7 +27,6 @@ public class CountryHybridRepository : ICountryRepository
             return countries;
         }
         countries = await _apiClient.GetCountriesByContinentAsync(continentSlug);
-        await _capitallocalRepository.AddFromCountriesAsync(countries.ToArray());
         await _localRepository.AddRangeAsync(countries.ToArray());
         return countries;
     }
@@ -40,7 +39,6 @@ public class CountryHybridRepository : ICountryRepository
             return countries;
         }
         countries = await _apiClient.GetCountriesByRegionAsync(regionSlug);
-        await _capitallocalRepository.AddFromCountriesAsync(countries.ToArray());
         await _localRepository.AddRangeAsync(countries.ToArray());
         return countries;
     }
